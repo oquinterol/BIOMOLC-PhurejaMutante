@@ -1,5 +1,4 @@
 # Modulos del pipline (Documentar)
-
 test:
 	./bin/test.sh
 sra2fq:
@@ -10,3 +9,5 @@ bwa-mem: fasta/*.fa fasta/*.fq
 	./bin/bwa-mem.sh
 trimm: fasta/*.fq
 	./bin/qc-trimm.sh fasta/*.qc
+clean:
+	./bin/clean.sh
