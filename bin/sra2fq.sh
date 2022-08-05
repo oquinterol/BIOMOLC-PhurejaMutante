@@ -9,9 +9,9 @@ find $DIR/sra -iname "*.sra" -type f -execdir \
 	fasterq-dump \
 		--threads $THD \
 		--mem $RAM \
-		--outdir $DIR/data/fastq {} \;
+		--outdir $DIR/fastq {} \;
 
-## Otra idea que tengo es usar fastq-dump que me permite mas flags
+# Otra idea que tengo es usar fastq-dump que me permite mas flags
 #find . -iname "*.sra" -type f -execdir \
 #	parallel-fastq-dump \
 #		--gzip \
@@ -19,7 +19,7 @@ find $DIR/sra -iname "*.sra" -type f -execdir \
 #		--skip-technical \
 #		--split-files \
 #		--read-filter pass \
-#		--outdir $DIR/data/fastq/ {} \;
+#		--outdir $DIR/fastq/ {} \;
 
 # Renombrado de todas las secuencias quitando el sra por R
 # asi se puede determinar el forward and reverse
