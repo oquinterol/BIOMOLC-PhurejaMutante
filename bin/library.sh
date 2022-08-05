@@ -5,3 +5,4 @@
 # https://github.com/rvalieris/parallel-fastq-dump
 # Tambien instala  sra desde bioconda
 conda install -c bioconda parallel-fastq-dump
+conda install cutadapt
