@@ -1,5 +1,7 @@
 # Modulos del pipline (Documentar)
 
+test:
+	./bin/test.sh
 sra2fq:
 	./bin/sra2fq.sh sra/
 index: fasta/*.fq
