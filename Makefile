@@ -1,6 +1,6 @@
 # Modulos del pipline (Documentar)
 
-sra2fq: sra/*.sra
+sra2fq:
 	./bin/sra2fq.sh sra/
 index: fasta/*.fq
 	./bin/bwa-index.sh fasta/
