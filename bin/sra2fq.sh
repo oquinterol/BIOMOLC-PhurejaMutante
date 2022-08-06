@@ -21,6 +21,11 @@ find $DIR/sra -iname "*.sra" -type f -execdir \
 #		--read-filter pass \
 #		--outdir $DIR/fastq/ {} \;
 
-# Renombrado de todas las secuencias quitando el sra por R
-# asi se puede determinar el forward and reverse
-find $DIR/fastq -iname "*fastq" -type f -execdir rename .sra_ _R {} \;
+# Renombrado de todas las secuencias quitando el sra
+find $DIR/fastq -iname "*fastq" -type f -execdir \
+	rename .sra_ _ {} \;
+
+# Compresion de todas las secuencias usando gzip
+find $DIR/fastq -iname "*.fastq" -type f -execdir gzip {} \;
+# Eliminamos las secuencias sin comprimir
+find $DIR/fastq -iname "*.fastq" -type f -execdir rm {} \;
