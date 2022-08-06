@@ -1,0 +1,10 @@
+Dos gurpos
+
+Tuberculo - Brote
+-----------------------------------------
+SRX10968528: RNAseq of uncertified S. phureja seed-tuber sprouts
+ID: SRR14627804
+
+-----------------------------------------
+SRX10968527: RNAseq of certified S. phureja seed-tuber sprouts
+ID: SRR14627805
