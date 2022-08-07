@@ -1,48 +1,61 @@
 #!/bin/bash
 
+# Variables
 DIR=$(pwd)/data
 DIRresults=$(pwd)/result
 THD=$(($(nproc --all)-2))
 
+# Ejemplo sencillo de limpieza de lecturas pareadas
+# trim_galore \
+#	--paired \
+#	--q 30 \
+#	--gzip \
+#	--fastqc \
+#	SRR######_1.fastq.gz \
+#	SRR######_2.fastq.gz \
+#	-o trimm_files/
+#
 
-# Lo primero es generar un informe fastqc para cada secuencia, para ver el antes.
-find $DIR -iname "*.fastq" -type f -execdir fastqc -o $DIR/fastqc {} \;
-# Se compila todos los informes
-multiqc -o $DIRresults/before $DIR/fastqc
+# Lee todos los archivos el la carpeta data/fastq
+# y los guarda en un arreglo
+for archivo in $DIR/fastq/raw/*.fq.gz; do
+  arreglo+=( "${archivo}" )
+done
+#for para comprobar el arreglo con los datos de la carpeta RAW
+#for i in "${arreglo[@]}"
+#do
+#	echo 'Termino por separado'
+#	echo $i
+#done
+# Concatenar los dos archivos en uno para pasarlos al trimm
+cont=$((${#arreglo[@]}-1))
+x=0
+while [ $x -le $cont ]
+do
+	files+=("${arreglo[$x]}"" ""${arreglo[$x+1]}")
+	x=$(( $x + 2 ))
+done
+# Se desfaza el contador con el total de items en el arreglo
+# Pues uno inicia en 1 i el otro en 0
 
-# Se remueve los adaptadores y las lecturas de baja calidad
-# Movemos los informes a otra carpeta
-find $DIR -iname "*fastqc*" -type f -not -path '*/raw/*' -execdir mv {} $DIR/fastqc/raw \;
+#echo 'Verificacion de files'
+#echo ' '
+#for i in "${files[@]}"
+#do
+#        echo 'Termino por separado'
+#        echo $i
+#done
 
-# Limpieza de secuencias
-# Solo se limpian los adaptadores y colas poli A
-# Primero colas Poly A
-for i in $DIR/fastq/*.fastq;
-do cutadapt \
-	-a "A{100}" --cores $THD \
-	-o "${i%.*}-trimmPolyA.fastq" \
-	"$i" && mv "$i" $DIR/fastq/raw/;done
-# Remover adaptadores (esto es para singleend)
-# Revisar esto para paired-end https://cutadapt.readthedocs.io/en/stable/guide.html#trimming-paired-end-reads
-for i in $DIR/fastq/*.fastq;
-do cutadapt \
-	-a "G \
-	--cores $THD \
-        --length-tag 'length=' \
-	-o "${i%-*}"_trimm.fastq \
-	"${i}" && rm "${i}";done
-
-# ejemplo de cutadapt
-# cutadapt -a TCGTATGCCGTCTTCTGCTTG \
-# -m 20 --cores 14 \
-# -o trimm-Seq.fastq \
-# --length-tag 'length=' \
-# data/fastq/SRR14627804_R1.fastq
-
-## Ejemplo de exclusion de directiorios con el comando find
-# find -name "*.js" -not -path "./directory/*"
-
-# Vulve a correr los fastqc de las secueencias trimming
-find $DIR -iname "*.fastq" -type f -not -path '*/raw/*' -execdir fastqc -o $DIR/fastqc {} \;
-# Se compila todos los informes
-multiqc -o $DIRresults $DIR/fastqc
+# Recorre cada par de secuencias y se lo pasa a trim_galore
+for i in "${files[@]}"
+do
+	trim_galore \
+		--paired \
+		--q 30 \
+		--cores $THD \
+		--gzip \
+		--fastqc \
+		--fastqc_args "--outdir $DIR/fastqc" \
+		-o $DIR/fastq/trimm/ \
+		$i
+done

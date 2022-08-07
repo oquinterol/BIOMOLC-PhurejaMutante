@@ -9,7 +9,7 @@ find $DIR/sra -iname "*.sra" -type f -execdir \
 	fasterq-dump \
 		--threads $THD \
 		--mem $RAM \
-		--outdir $DIR/fastq {} \;
+		--outdir $DIR/fastq/raw {} \;
 
 # Otra idea que tengo es usar fastq-dump que me permite mas flags
 #find . -iname "*.sra" -type f -execdir \
@@ -22,10 +22,10 @@ find $DIR/sra -iname "*.sra" -type f -execdir \
 #		--outdir $DIR/fastq/ {} \;
 
 # Renombrado de todas las secuencias quitando el sra
-find $DIR/fastq -iname "*fastq" -type f -execdir \
+find $DIR/fastq/raw -iname "*.fastq" -type f -execdir \
 	rename .sra_ _ {} \;
+find $DIR/fastq/raw -iname "*.fastq" -type f -execdir \
+        rename .fastq .fq {} \;
 
 # Compresion de todas las secuencias usando gzip
-find $DIR/fastq -iname "*.fastq" -type f -execdir gzip {} \;
-# Eliminamos las secuencias sin comprimir
-find $DIR/fastq -iname "*.fastq" -type f -execdir rm {} \;
+find $DIR/fastq/raw -iname "*.fq" -type f -execdir gzip {} \;
