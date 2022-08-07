@@ -15,15 +15,16 @@ result=$(pwd)/result
 
 # Paso a paso
 # Limpiar partes incompletas de sra2fq
-#find $datos -iname "fasterq*" -type d -execdir rm -r {} \;
+find $datos -iname "fasterq*" -type d -execdir rm -r {} \;
 # Limpiar fastq completos
-#find $datos -iname "*.fastq" -type f -execdir rm {} \;
+find $datos -iname "*.fq.gz" -type f -execdir rm {} \;
+find $datos -iname "*trimm*" -type f -execdir rm {} \;
 # Limpiar los informes de fastqc
 find $datos -iname "*fastqc*" -type f -not -path '*/raw/*' -execdir rm {} \;
 # Limpiar el multiqc
 find $result -iname "multiqc*" -type d -execdir rm -r {} \;
 find $result -iname "multiqc*" -type f -execdir rm {} \;
 # Mover las secuencias  de raw a principal
-mv data/fastq/raw/* data/fastq
+#mv data/fastq/raw/* data/fastq
 # remover secuencias limpias
-rm data/fastq/*trimm*
+#rm data/fastq/*trimm*
