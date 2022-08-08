@@ -28,8 +28,8 @@ do
 		--q 30 \
 		--cores $THD \
 		--gzip \
-		--fastqc \
-		--fastqc_args "--outdir $DIR/fastqc" \
 		-o $DIR/fastq/trimm/ \
 		$i
 done
+# Agregar paralizacioón de los informes FastQC para compilar con MultiQC
+exit 0
