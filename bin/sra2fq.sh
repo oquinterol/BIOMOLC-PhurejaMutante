@@ -27,5 +27,8 @@ find $DIR/fastq/raw -iname "*.fastq" -type f -execdir \
 find $DIR/fastq/raw -iname "*.fastq" -type f -execdir \
         rename .fastq .fq {} \;
 
+
+echo 'Comprimiendo Secuencias....'
 # Compresion de todas las secuencias usando gzip
-find $DIR/fastq/raw -iname "*.fq" -type f -execdir gzip {} \;
+find $DIR/fastq/raw -iname "*.fq" -type f -execdir pigz -p$THD {} \;
+exit 0
