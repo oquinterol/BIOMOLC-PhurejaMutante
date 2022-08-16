@@ -1,4 +1,4 @@
-# Modulos del pipline (Documentar)
+# Modulos del pipline
 
 
 test:
@@ -10,5 +10,9 @@ trimm:
 align:
 	./bin/align.sh
 	./bin/sam2bam.sh
+snp:
+	./bin/snpcall.sh
+
+
 clean:
 	./bin/clean.sh
