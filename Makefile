@@ -12,7 +12,7 @@ align:
 	./bin/sam2bam.sh
 snp:
 	./bin/snpcall.sh
-
-
+dea:
+	./bin/dea.sh
 clean:
 	./bin/clean.sh

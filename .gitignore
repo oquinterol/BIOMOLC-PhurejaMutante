@@ -6,6 +6,7 @@ data/fastqc/
 data/sam/
 data/sra/
 data/vcf/
+data/snp/*
 result/*
 
 *.sra

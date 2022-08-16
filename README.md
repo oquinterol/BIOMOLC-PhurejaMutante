@@ -1,2 +1,2 @@
-# Pipeline para el analisis de mutantes solidos
-##Solanum Tuberosum Gr Phureja
+# Pipeline para el análisis de mutantes sólidos
+## Solanum Tuberosum Gr Phureja
