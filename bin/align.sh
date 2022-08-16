@@ -3,8 +3,7 @@
 # recordar que esto es para paired-end
 # Primero toca generar un indice de las secuencias que se tengan de referencia
 ## bwa index my.fasta --> my.fasta == Seciencia de referencia
-bwa index $TREF 
-
+bwa index $TREF
 # Lee todos los archivos el la carpeta data/fastq y los guarda en un arreglo
 # Guarda los nombres de forward
 for file in $FQTRIM/*1.fq.gz; do
@@ -18,11 +17,8 @@ done
 for nameid in "${filesF[@]}"; do
     id+=(${nameid%%_*})
 done
-
 # Correr el bwa mem para todas las secuenias pareadas
-numseq=$((${#id[@]}-1))
-
-for ((c=0; c<=$numseq; c++))
+for ((c=0; c<=$((${#id[@]}-1)); c++))
 do
     bwa mem $TREF -t $THD $FQTRIM/${filesF[$c]} $FQTRIM/${filesR[$c]} > $SAM/${id[$c]}.sam
 done
