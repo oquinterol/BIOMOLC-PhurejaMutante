@@ -14,8 +14,7 @@ find $FQRAW -iname "*.fastq" -type f -execdir \
 	rename .sra_ _ {} \;
 find $FQRAW -iname "*.fastq" -type f -execdir \
         rename .fastq .fq {} \;
-
-#echo 'Comprimiendo Secuencias....'
+echo 'Comprimiendo Secuencias....'
 # Compresion de todas las secuencias usando gzip
 find $FQRAW -iname "*.fq" -type f -execdir pigz -k -p$THD {} \;
 exit 0
