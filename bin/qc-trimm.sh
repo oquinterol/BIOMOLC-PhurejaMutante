@@ -1,13 +1,10 @@
 #!/bin/bash
 
-# Variables
-DIR=$(pwd)/data
-DIRresults=$(pwd)/result
-THD=$(($(nproc --all)-1))
+. ./bin/var.sh # Variables unificadas
 
 # Lee todos los archivos el la carpeta data/fastq
 # y los guarda en un arreglo
-for archivo in $DIR/fastq/raw/*.fq.gz; do
+for archivo in $FQRAW/*.fq.gz; do
   arreglo+=( "${archivo}" )
 done
 
@@ -44,7 +41,7 @@ do
 		--q 30 \
 		--cores $THD \
 		--gzip \
-		-o $DIR/fastq/trimm/ \
+		-o $FQTRIM \
 		$i
 done
 
@@ -53,7 +50,7 @@ done
 # find $DIR/fastq -iname "*.fq.gz" -type f -print | parallel "fastqc --outdir $DIR/fastqc/ {}"
 
 # usar la opcion de FastQC para mandarle todos los archivos
-fastqc -o $DIR/fastqc -t $THD $DIR/fastq/*/*
+fastqc -o $FASTQC -t $THD $FASTQ/*/*
 # se compilan todos los informes usando MULTIQC
-multiqc -o $DIRresults $DIR/fastqc
+multiqc -o $RESULT $FASTQC
 exit 0
