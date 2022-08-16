@@ -9,6 +9,6 @@ trimm:
 	./bin/qc-trimm.sh
 align:
 	./bin/align.sh
-
+	./bin/sam2bam.sh
 clean:
 	./bin/clean.sh
