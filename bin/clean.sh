@@ -17,9 +17,12 @@ result=$(pwd)/result
 # Limpiar partes incompletas de sra2fq
 find $datos -iname "fasterq*" -type d -execdir rm -r {} \;
 # Limpiar fastq completos
+find $datos -iname "*.fastq" -type f -execdir rm {} \;
 find $datos -iname "*.fq" -type f -execdir rm {} \;
 find $datos -iname "*.fq.gz" -type f -execdir rm {} \;
+
 find $datos -iname "*trimm*" -type f -execdir rm {} \;
+find $datos -iname "*_val_*" -type f -execdir rm {} \;
 # Limpiar los informes de fastqc
 find $datos -iname "*fastqc*" -type f -not -path '*/raw/*' -execdir rm {} \;
 # Limpiar el multiqc
