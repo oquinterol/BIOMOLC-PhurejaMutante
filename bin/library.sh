@@ -1,7 +1,6 @@
 #!/bin/bash
 DIR=$(pwd)
 
-
 # Pequeña lista de los programas que uso.
 # - FastQC
 # - cutadapt
