@@ -13,12 +13,16 @@ for file in $BAM/*_sorted.bam; do
   bamFS+=( "${file##*/}" )
 done
 # Se crea el VCF file
-samtools mpileup -f $TREF "${bamFS[@]}" -o $VCF/$SNPname-raw.bcf
+cd $BAM
+samtools mpileup -f $TREF -s "${bamFS[@]}" > $VCF/$SNPname-raw.bcf
+cd $DIR
 
-for file in $VCF/*-raw.bam; do
+for file in $VCF/*-raw.bcf; do
   vfcraw+=( "${file##*/}" )
 done
 # Call SNPs
-bcftools view -bvcg $VCF/${vfcraw[0]} > $VCF/$SNPname.bcf
+bcftools view -vcg $VCF/*raw.bcf > $VCF/$SNPname-call.bcf
 # Filtrado de SNPs
-bcftools view $VCF/$SNPname.bcf | vcfutils.pl varFilter - > $SNPname-final.bcf
+bcftools view $VCF/$SNPname-call.bcf | vcfutils.pl varFilter - > $VCF/$SNPname.vcf
+
+exit 0
