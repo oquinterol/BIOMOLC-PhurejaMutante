@@ -38,6 +38,6 @@ echo '...................................'
 # implementación con GNU-parallel
 find $BAM -type f \( -iname "*.bam" ! -iname "*sorted*" \) -print | parallel \
 'samtools sort {} -o {}_sorted.bam'
-find $SAM -iname "*.bam" -execdir rename .bam_ _ {} \;
+find $BAM -iname "*.bam" -execdir rename .bam_ _ {} \;
 
 exit 0

@@ -63,9 +63,8 @@ echo 'El numero de secuencias encontradas es: '$(($numseq+1))
 #    echo $SAM/${id[$c]}.sam
 #    echo '.....................'
 #done
-bwa index $TREF
-
+echo "${id[@]}"
 #echo 'Prueba de sam2bam'
 #find $SAM -iname "*.sam" -print | parallel 'samtools view -S -b {} > {}.bam'
-
+find $BAM -iname "*.bam" -execdir rename .bam_ _ {} \;
 exit 0
