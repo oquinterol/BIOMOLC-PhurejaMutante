@@ -46,3 +46,7 @@ do cutadapt \
 find $DIR -iname "*.fastq" -type f -not -path '*/raw/*' -execdir fastqc -o $DIR/fastqc {} \;
 # Se compila todos los informes
 multiqc -o $DIRresults $DIR/fastqc
+
+# Agregar paralelización de los informes FastQC para compilar con MultiQC
+# haciendo uso de GNU parallel se puede generar un informe por hilo disponible con FastQC
+# find $DIR/fastq -iname "*.fq.gz" -type f -print | parallel "fastqc --outdir $DIR/fastqc/ {}"
