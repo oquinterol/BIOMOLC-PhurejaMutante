@@ -5,6 +5,7 @@ data/fastq/
 data/fastqc/
 data/sam/
 data/sra/
+data/vcf/
 result/
 
 *.sra
