@@ -55,15 +55,17 @@ echo 'El numero de secuencias encontradas es: '$(($numseq+1))
 #    echo $file
 #    c+=1
 #done
-for ((c=0; c<=$((${#id[@]}-1)); c++))
-do
-    echo '.....................'
-    echo $FQTRIM/${filesF[$c]}
-    echo $FQTRIM/${filesR[$c]}
-    echo $SAM/${id[$c]}.sam
-    echo '.....................'
-done
+#for ((c=0; c<=$((${#id[@]}-1)); c++))
+#do
+#    echo '.....................'
+#    echo $FQTRIM/${filesF[$c]}
+#    echo $FQTRIM/${filesR[$c]}
+#    echo $SAM/${id[$c]}.sam
+#    echo '.....................'
+#done
+bwa index $TREF
 
-
+#echo 'Prueba de sam2bam'
+#find $SAM -iname "*.sam" -print | parallel 'samtools view -S -b {} > {}.bam'
 
 exit 0
