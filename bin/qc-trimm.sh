@@ -16,18 +16,6 @@ do
 	files+=("${arreglo[$x]}"" ""${arreglo[$x+1]}")
 	x=$(( $x + 2 ))
 done
-
-## Verificar el contenido del arreglo
-#for i in "${files[@]}"
-#do
-#	printf "Item\n"
-#	printf "...........\n"
-#	printf "...........\n"
-#	echo $i
-#	printf "...........\n"
-#	printf "...........\n"
-#done
-
 # Recorre cada par de secuencias y se lo pasa a trim_galore
 # --gzip option quitada para prueba
 for i in "${files[@]}"
@@ -45,10 +33,13 @@ do
 		$i
 done
 
-# Agregar paralelización de los informes FastQC para compilar con MultiQC
-# haciendo uso de GNU parallel se puede generar un informe por hilo disponible con FastQC
-# find $DIR/fastq -iname "*.fq.gz" -type f -print | parallel "fastqc --outdir $DIR/fastqc/ {}"
+# Renombrado de todas las secuencias quitando el _1_ por _
+find $FQTRIM -iname "*val*.fq.gz" -type f -execdir \
+	rename _1_ _ {} \;
+find $FQTRIM -iname "*val*.fq.gz" -type f -execdir \
+    rename _2_ _ {} \;
 
+printf "Generando informes de secuencias.....\n"
 # usar la opcion de FastQC para mandarle todos los archivos
 fastqc -o $FASTQC -t $THD $FASTQ/*/*
 # se compilan todos los informes usando MULTIQC
