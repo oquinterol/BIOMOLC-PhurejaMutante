@@ -20,6 +20,9 @@ for nameid in "${filesF[@]}"; do
 done
 
 # Correr el bwa mem para todas las secuenias pareadas
-for ((c=0; c<=$((${#id[@]}-1)); c++)); do
+numseq=$((${#id[@]}-1))
+
+for ((c=0; c<=$numseq; c++))
+do
     bwa mem $TREF -t $THD $FQTRIM/${filesF[$c]} $FQTRIM/${filesR[$c]} > $SAM/${id[$c]}.sam
 done
