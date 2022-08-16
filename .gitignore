@@ -4,4 +4,4 @@ data/fastq/
 data/fastqc/
 data/sam/
 data/sra/
-
+result/

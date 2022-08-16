@@ -3,7 +3,7 @@
 # Variables
 DIR=$(pwd)/data
 DIRresults=$(pwd)/result
-THD=$(($(nproc --all)-2))
+THD=$(($(nproc --all)-1))
 
 # Lee todos los archivos el la carpeta data/fastq
 # y los guarda en un arreglo
@@ -20,9 +20,25 @@ do
 	x=$(( $x + 2 ))
 done
 
+## Verificar el contenido del arreglo
+#for i in "${files[@]}"
+#do
+#	printf "Item\n"
+#	printf "...........\n"
+#	printf "...........\n"
+#	echo $i
+#	printf "...........\n"
+#	printf "...........\n"
+#done
+
 # Recorre cada par de secuencias y se lo pasa a trim_galore
+# --gzip option quitada para prueba
 for i in "${files[@]}"
 do
+	printf "Limpiando secuencias.....\n"
+	echo $i
+	printf ".........................\n"
+	printf ".........................\n"
 	trim_galore \
 		--paired \
 		--q 30 \
@@ -31,5 +47,13 @@ do
 		-o $DIR/fastq/trimm/ \
 		$i
 done
-# Agregar paralizacioón de los informes FastQC para compilar con MultiQC
+
+# Agregar paralelización de los informes FastQC para compilar con MultiQC
+# haciendo uso de GNU parallel se puede generar un informe por hilo disponible con FastQC
+# find $DIR/fastq -iname "*.fq.gz" -type f -print | parallel "fastqc --outdir $DIR/fastqc/ {}"
+
+# usar la opcion de FastQC para mandarle todos los archivos
+fastqc -o $DIR/fastqc -t $THD $DIR/fastq/*/*
+# se compilan todos los informes usando MULTIQC
+multiqc -o $DIRresults $DIR/fastqc
 exit 0
