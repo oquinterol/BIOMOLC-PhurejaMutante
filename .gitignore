@@ -1,3 +1,4 @@
+.vscode/
 data/bam
 data/fasta/
 data/fastq/
@@ -5,3 +6,9 @@ data/fastqc/
 data/sam/
 data/sra/
 result/
+
+*.sra
+*.sam
+*.fasta
+*.fq.gz
+*.fq
