@@ -1,6 +1,5 @@
 # Modulos del pipline
 
-
 test:
 	./bin/test.sh
 sra2fq:
