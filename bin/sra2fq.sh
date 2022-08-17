@@ -1,9 +1,6 @@
 #!/bin/sh
-
 . ./bin/var.sh # Variables unificadas
-
-# Ejecución
-# Faster-dump herramienta mas reciente
+# Ejecución Faster-dump
 find $SRA -iname "*.sra" -type f -execdir \
 	fasterq-dump \
 		--threads $THD \
