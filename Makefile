@@ -1,5 +1,7 @@
 # Modulos del pipline
 
+install:
+	./bin/install.sh
 test:
 	./bin/test.sh
 sra2fq:
