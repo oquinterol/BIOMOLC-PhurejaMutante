@@ -2,6 +2,7 @@
 
 Aqui un encabezado Buscar como hacer uno con el logo de la U y el logo de BIOMOLC
 
+[![DOI](https://zenodo.org/badge/525475132.svg)](https://zenodo.org/badge/latestdoi/525475132)
 [![GitHub issues](https://img.shields.io/github/issues/quinterol/BIOMOLC-PhurejaMutante)](https://github.com/quinterol/BIOMOLC-PhurejaMutante/issues)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-blue.svg)
 [![GitHub license](https://img.shields.io/github/license/quinterol/BIOMOLC-PhurejaMutante)](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/LICENSE)
