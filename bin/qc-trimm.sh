@@ -12,6 +12,8 @@ do
 	files+=("${arreglo[$x]}"" ""${arreglo[$x+1]}")
 	x=$(( $x + 2 ))
 done
+# hacer una evaluacion inicial de datos con FASTQC antes que limpiar 
+#
 # Recorre cada par de secuencias y se lo pasa a trim_galore
 # --gzip option quitada para prueba
 for i in "${files[@]}"
