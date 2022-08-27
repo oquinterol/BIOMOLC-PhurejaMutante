@@ -8,11 +8,11 @@ ___
 [![GitHub license](https://img.shields.io/github/license/quinterol/BIOMOLC-PhurejaMutante)](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/LICENSE)
 
 ![Image Link](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/docs/banner.png)
-___
+
 ## Instalación
 - Las dependencias necesarias para hacer uso del pipeline.
 
-    ```bash
+    ```sh
     make install
     ```
 ## Uso
@@ -20,16 +20,16 @@ El uso se explica a mas detalle en la documentación pero al hacer uso de **make
 
 - Limpieza y Filtrado
 
-    ```bash
+    ```sh
     make trim
     ```
 - DEA: Análisis de Expresión Diferencial
 
-    ```bash
+    ```sh
     make dea
     ```
 - SNPs: Llamado de variantes
 
-    ```bash
+    ```sh
     make snp
     ```
