@@ -12,6 +12,9 @@ SAM=$DATA/sam
 SRA=$DATA/sra
 VCF=$DATA/vcf
 RESULT=$DIR/result
+REPORT=$RESULT/report
+QCRAW=$REPORT/raw
+QCTRIM=$REPORT/trim
 #Secuencias de Referencia
 TREFz=$FASTA/DM_1-3_516_R44_potato.v6.1.hc_gene_models.cdna.fa.gz
 TREF=$FASTA/DM_1-3_516_R44_potato.v6.1.hc_gene_models.cdna.fa

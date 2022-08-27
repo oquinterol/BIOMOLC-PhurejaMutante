@@ -1,4 +1,23 @@
 #!/bin/bash
+# Crear las carpetas
+# bin
+# data
+#	bam
+#	dea
+# 	fasta
+#	fastqc
+#	sam
+#	sra
+#	vcf
+# docs
+# result
+#	report
+#		raw
+#		both
+mkdir -p ./{bin,data/{bam,dea,fasta,fastqc,sam,sra,vcf},docs,result/report/{raw,both}}
+
+
+
 echo "Detectando Distro Linux"
 
 printf "\nPrimer script busca archivos especificos a cada distro\n"
