@@ -11,7 +11,7 @@ Encabazado
 ## Instalación
 
     ```bash
-    make install
+    make trim
     ```
 ## Uso
 El uso se explica a mas detalle en la documentación pero al hacer uso de **make** se puede acceder a todas las opciones.
