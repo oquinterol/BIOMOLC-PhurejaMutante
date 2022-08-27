@@ -1,6 +1,5 @@
 # Análisis de Mutantes Sólidos de Solanum Tuberosum Gr. Phureja
-
-Encabazado
+___
 
 [![DOI](https://zenodo.org/badge/525475132.svg)](https://zenodo.org/badge/latestdoi/525475132)
 [![opensource](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](#)
@@ -8,8 +7,10 @@ Encabazado
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-blue.svg)
 [![GitHub license](https://img.shields.io/github/license/quinterol/BIOMOLC-PhurejaMutante)](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/LICENSE)
 
+![Image Link](https://static.platzi.com/media/public/uploads/proceso-de-la-ciencia-de-datos_3be86b4a-94d2-4c6e-aaa0-6adae0833766.png)
+___
 ## Instalación
-- El proceso de instalación, busca instalar en la maquina todas las dependencias necesarias de manera sencilla.
+- Las dependencias necesarias para hacer uso del pipeline.
 
     ```bash
     make install
