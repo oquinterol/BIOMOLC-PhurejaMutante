@@ -24,6 +24,9 @@
 		
 mkdir -p ./{bin,data/{bam/sort,dea,fasta,fastq/{raw,trim},fastqc/{raw,trim},sam,sra,vcf},docs,result/report/{raw,both}}
 
+# Descarga de los datos de Referencia (Phujera) SpudDB
+# Ejemplo
+cat url.list | parallel -j 8 wget -O {#}.html {}
 
 # Detectar la distro, para saber que gestor de paquetes usar.
 echo "Detectando Distro Linux"
