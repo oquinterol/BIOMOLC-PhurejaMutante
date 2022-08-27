@@ -14,9 +14,9 @@ align: trim
 trim: sra2fq
 	./bin/trim.sh
 qctrim: trim
-	./bin/qc.sh 
+	./bin/qc-trim.sh 
 qcraw: sra2fq 
-	./bin/qc.sh
+	./bin/qc-raw.sh
 sra2fq: ./data/sra/*.sra
 	./bin/sra2fq.sh
 install: 
