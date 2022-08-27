@@ -26,3 +26,5 @@ bcftools view -vcg $VCF/*raw.bcf > $VCF/$SNPname-call.bcf
 bcftools view $VCF/$SNPname-call.bcf | vcfutils.pl varFilter - > $VCF/$SNPname.vcf
 
 exit 0
+
+# NGSP -->  
