@@ -13,6 +13,7 @@
 
 samtools view $SAM/SRR18272798.sam | htseq-count --idattr=Parent -s no - $AREF > ${id[0]}.txt
 
+
 #Parte de R
 library(“DESeq2”)
 sample.names <- sort(paste(c(“MT”, “WT”), rep(1:3, each=2), sep=““))
