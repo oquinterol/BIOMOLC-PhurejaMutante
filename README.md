@@ -7,7 +7,7 @@ ___
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-blue.svg)
 [![GitHub license](https://img.shields.io/github/license/quinterol/BIOMOLC-PhurejaMutante)](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/LICENSE)
 
-![Image Link](https://static.platzi.com/media/public/uploads/proceso-de-la-ciencia-de-datos_3be86b4a-94d2-4c6e-aaa0-6adae0833766.png)
+![Image Link](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/docs/banner.png)
 ___
 ## Instalación
 - Las dependencias necesarias para hacer uso del pipeline.
