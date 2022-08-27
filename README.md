@@ -9,7 +9,8 @@ Encabazado
 [![GitHub license](https://img.shields.io/github/license/quinterol/BIOMOLC-PhurejaMutante)](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/LICENSE)
 
 ## Instalación
-- El proceso de instalación, busca instalar en la maquina todas las dependencias necesarias de manera sencilla. 
+- El proceso de instalación, busca instalar en la maquina todas las dependencias necesarias de manera sencilla.
+
     ```bash
     make install
     ```
@@ -17,14 +18,17 @@ Encabazado
 El uso se explica a mas detalle en la documentación pero al hacer uso de **make** se puede acceder a todas las opciones.
 
 - Limpieza y Filtrado
+
     ```bash
     make trim
     ```
 - DEA: Análisis de Expresión Diferencial
+
     ```bash
     make dea
     ```
 - SNPs: Llamado de variantes
+
     ```bash
     make snp
     ```
