@@ -1,19 +1,24 @@
 # Modulos del pipline
-
-install:
-	./bin/install.sh
-test:
-	./bin/test.sh
-sra2fq:
-	./bin/sra2fq.sh
-trimm:
-	./bin/qc-trimm.sh
-align:
-	./bin/align.sh
-	./bin/sam2bam.sh
-snp:
-	./bin/snpcall.sh
-dea:
+result: dea snp
+	
+dea: bamsort
 	./bin/dea.sh
-clean:
-	./bin/clean.sh
+snp: bamsort
+	./bin/snpcall.sh
+bamsort: sam2bam
+	./bin/bamsort.sh ./data/bam/sort/*.bam
+sam2bam: align
+	./bin/sam2bam.sh ./data/bam/*.bam
+align: trim
+	./bin/align.sh 
+trim: sra2fq
+	./bin/trim.sh
+qctrim: trim
+	./bin/qc.sh 
+qcraw: sra2fq 
+	./bin/qc.sh
+sra2fq: ./data/sra/*.sra
+	./bin/sra2fq.sh
+install: 
+	chmod ug+x ./bin/*
+	./bin/install.sh
