@@ -1,23 +1,34 @@
 #!/bin/bash
 # Crear las carpetas
-# bin
-# data
-#	bam
-#	dea
-# 	fasta
-#	fastqc
-#	sam
-#	sra
-#	vcf
-# docs
-# result
-#	report
-#		raw
-#		both
-mkdir -p ./{bin,data/{bam,dea,fasta,fastqc,sam,sra,vcf},docs,result/report/{raw,both}}
+# .
+# ├── bin
+# ├── data
+# │	  ├── bam
+# │	  │	  └── sort
+# │   ├── dea
+# │	  ├── fasta
+# │	  ├── fastq
+# │	  │	  ├── raw
+# │	  │	  └── trim
+# │	  ├── fastqc
+# │	  │	  ├── raw
+# │	  │	  └── trim
+# │	  ├── sam
+# │	  ├── sra
+# │	  └── vcf
+# ├── docs
+# └── result
+#     └── report
+#         ├── both
+#         └── raw
+		
+mkdir -p ./{bin,data/{bam/sort,dea,fasta,fastq/{raw,trim},fastqc/{raw,trim},sam,sra,vcf},docs,result/report/{raw,both}}
 
+# Descarga de los datos de Referencia (Phujera) SpudDB
+# Ejemplo
+cat url.list | parallel -j 8 wget -O {#}.html {}
 
-
+# Detectar la distro, para saber que gestor de paquetes usar.
 echo "Detectando Distro Linux"
 
 printf "\nPrimer script busca archivos especificos a cada distro\n"

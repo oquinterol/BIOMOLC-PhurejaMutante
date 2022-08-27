@@ -33,9 +33,5 @@ done
 # Renombrado de todas las secuencias quitando el _1_ por _
 find $FQTRIM -iname "*val*.fq.gz" -type f -execdir rename _1_ _ {} \;
 find $FQTRIM -iname "*val*.fq.gz" -type f -execdir rename _2_ _ {} \;
-printf "Generando informes de secuencias.....\n"
-# usar la opcion de FastQC para mandarle todos los archivos
-fastqc -o $FASTQC -t $THD $FASTQ/*/*
-# se compilan todos los informes usando MULTIQC
-multiqc -o $RESULT $FASTQC
+
 exit 0
