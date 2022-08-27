@@ -9,7 +9,7 @@ Encabazado
 [![GitHub license](https://img.shields.io/github/license/quinterol/BIOMOLC-PhurejaMutante)](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/LICENSE)
 
 ## Instalación
-El proceso de instalación, busca instalar en la maquina todas las dependencias necesarias de manera sencilla. 
+- El proceso de instalación, busca instalar en la maquina todas las dependencias necesarias de manera sencilla. 
     ```bash
     make install
     ```
