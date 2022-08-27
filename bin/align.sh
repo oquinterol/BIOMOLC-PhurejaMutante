@@ -17,8 +17,10 @@ done
 for nameid in "${filesF[@]}"; do
     id+=(${nameid%%_*})
 done
-# Correr el bwa mem para todas las secuenias pareadas
+# Correr el bwa mem para todas las secuenias pareadas 
 for ((c=0; c<=$((${#id[@]}-1)); c++))
 do
     bwa mem $TREF -t $THD $FQTRIM/${filesF[$c]} $FQTRIM/${filesR[$c]} > $SAM/${id[$c]}.sam
 done
+
+# Con un pipe | Pasar de una vez bam
