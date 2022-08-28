@@ -21,7 +21,6 @@
 #     └── report
 #         ├── both
 #         └── raw
-		
 mkdir -p ./{bin,data/{bam/sort,dea,fasta,fastq/{raw,trim},fastqc/{raw,trim},sam,sra,vcf},docs,result/report/{raw,both}}
 
 # Descarga de los datos de Referencia (Phujera) SpudDB
