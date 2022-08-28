@@ -13,6 +13,8 @@ ___
 - Las dependencias necesarias para hacer uso del pipeline.
 
     ```sh
+    git clone https://github.com/quinterol/BIOMOLC-PhurejaMutante.git -o Pipeline_Phureja
+    cd Pipeline-Phureja
     make install
     ```
 ## Uso
