@@ -2,8 +2,8 @@
 
 . ./bin/var.sh # Variables unificadas
 
-## Volver a indexar la secuencia referencia haciendo uso de samtools No soporta gz horrible
-
+## Volver a indexar la secuencia referencia haciendo uso de samtools No soporta gz
+# Indexacion con samtools
 samtools faidx $TREF
 
 ## Generar archivo raw de VCF Variant Call format todo los archivos ordenados sorted.bam
