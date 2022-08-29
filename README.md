@@ -14,7 +14,7 @@ ___
 
     ```sh
     git clone https://github.com/quinterol/BIOMOLC-PhurejaMutante.git Pipeline_Phureja
-    cd Pipeline-Phureja
+    cd Pipeline_Phureja
     make install
     ```
 ## Uso
