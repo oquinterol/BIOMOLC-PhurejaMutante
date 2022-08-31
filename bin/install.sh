@@ -43,7 +43,7 @@ QCTRIM=$REPORT/trim
 #cat url.list | parallel -j 8 wget -O {#}.html {}
 echo "Descargando las secuencias de referencia de SpudDB"
 cd $FASTA
-cat $DATA/files.txt | parallel wget -N {}
+cat $DATA/referencefiles.txt | parallel wget -N {}
 cd $DIR
 # Detectando Distro
 printf "Detectando la distribucion Linux\n"
@@ -55,4 +55,17 @@ elif [[ ${DISTRIB} == *"Manjaro"* ]] || [[ ${DISTRIB} == *"Arch"* ]]; then
 	echo "Usando pacman para descargar dependencias"
 fi
 
-echo $DISTRIB
+if [[ -f ~/.local/bin/trim_galore ]]
+then
+	echo "trim_galore esta instalado en su sistema"
+else
+	# Instalación de TrimGalore
+	# Descarga del repo
+	curl -fsSL https://github.com/FelixKrueger/TrimGalore/archive/refs/tags/0.6.7.tar.gz -o trim_galore.tar.gz
+	# Descompresion
+	tar xvzf trim_galore.tar.gz
+	# busca el script y lo mueve al bin del repo
+	find $DIR -iname "trim_galore" -type f -not -path '*/bin/*' -exec mv {} ~/.local/bin/ \;
+	# Borramos los datos de instalación
+	find $DIR \(-iname "trim_galore*" -o -iname "TrimGalore*" \) -not -path '*/bin/*' -exec rm -r {} \;
+fi

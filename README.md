@@ -1,4 +1,4 @@
-# Análisis de Mutantes Sólidos de Solanum Tuberosum Gr. Phureja
+# Análisis de Mutantes Sólidos de *Solanum Tuberosum Gr. Phureja*
 ___
 
 [![DOI](https://zenodo.org/badge/525475132.svg)](https://zenodo.org/badge/latestdoi/525475132)
@@ -7,7 +7,15 @@ ___
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-blue.svg)
 [![GitHub license](https://img.shields.io/github/license/quinterol/BIOMOLC-PhurejaMutante)](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/LICENSE)
 
-![Image Link](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/docs/banner.png)
+<h1 align="center">
+  <a href="https://github.com/quinterol/BIOMOLC-PhurejaMutante">
+    <img alt="BIOMOLC logo" src="./docs/biomolc.png" width="400">
+  </a>
+  
+  Grupo de Investigación BIOMOLC
+  <br><font size="4"> Universidad Distrital Francisco José de Caldas</font></br>
+
+</h1>
 
 ## Instalación
 - Las dependencias necesarias para hacer uso del pipeline.
@@ -18,18 +26,26 @@ ___
     make install
     ```
 ## Uso
-El uso se explica a mas detalle en la documentación pero al hacer uso de **make** se puede acceder a todas las opciones.
+Agregar los archivos sra dentro de `./data/sra` para hacer uso de la herramienta, para ello con **make** se puede acceder a todas las opciones.
 
 - Limpieza y Filtrado
 
     ```sh
     make trim
     ```
+
+- Alineamiento
+    
+    ```sh
+    make align
+    ```
+
 - DEA: Análisis de Expresión Diferencial
 
     ```sh
     make dea
     ```
+
 - SNPs: Llamado de variantes
 
     ```sh
