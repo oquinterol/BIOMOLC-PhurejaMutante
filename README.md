@@ -7,14 +7,14 @@ ___
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-blue.svg)
 [![GitHub license](https://img.shields.io/github/license/quinterol/BIOMOLC-PhurejaMutante)](https://github.com/quinterol/BIOMOLC-PhurejaMutante/blob/main/LICENSE)
 
-<h2 align="center">
+<h1 align="center">
   <a href="https://github.com/quinterol/BIOMOLC-PhurejaMutante">
     <img alt="BIOMOLC logo" src="./docs/biomolc.png" width="300">
   </a>
   <br>Grupo de Investigación BIOMOLC
   <br>Semillero de Agrigenómica
-</h2>
-<h3 align="center">Universidad Distrital Francisco José de Caldas</h3>
+</h1>
+<h2 align="center">Universidad Distrital Francisco José de Caldas</h3>
 
 ## Instalación
 - Las dependencias necesarias para hacer uso del pipeline.
