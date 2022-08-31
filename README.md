@@ -9,10 +9,9 @@ ___
 
 <h1 align="center">
   <a href="https://github.com/quinterol/BIOMOLC-PhurejaMutante">
-    <img alt="BIOMOLC logo" src="./docs/biomolc.png" width="400">
+    <img alt="BIOMOLC logo" src="./docs/biomolc.png" width="200">
   </a>
-  
-  Grupo de Investigación BIOMOLC
+  <br>Grupo de Investigación BIOMOLC</br>
   <br><font size="4"> Universidad Distrital Francisco José de Caldas</font></br>
 
 </h1>
