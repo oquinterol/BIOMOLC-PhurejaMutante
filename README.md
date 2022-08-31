@@ -25,7 +25,7 @@ ___
     make install
     ```
 ## Uso
-Agregar los archivos sra dentro de `./data/sra` para hacer uso de la herramienta, para ello con **make** se puede acceder a todas las opciones.
+Agregar los archivos SRA dentro de `./data/sra` para hacer uso de la herramienta, para ello con **make** se puede acceder a todas las opciones.
 
 - Limpieza y Filtrado
 
