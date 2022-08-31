@@ -11,11 +11,12 @@ ___
   <a href="https://github.com/quinterol/BIOMOLC-PhurejaMutante">
     <img alt="BIOMOLC logo" src="./docs/biomolc.png" width="200">
   </a>
-  <br>Grupo de Investigación BIOMOLC</br>
-  <br><font size="4"> Universidad Distrital Francisco José de Caldas</font></br>
 
+  Grupo de Investigación BIOMOLC
+  
+  <font size="4"> Universidad Distrital Francisco José de Caldas</font>
 </h1>
-
+  
 ## Instalación
 - Las dependencias necesarias para hacer uso del pipeline.
 
