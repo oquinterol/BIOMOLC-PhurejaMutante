@@ -1,14 +1,16 @@
 .vscode/
-data/bam
+data/bam/
+data/dea/
 data/fasta/
 data/fastq/
 data/fastqc/
 data/sam/
 data/sra/
+data/snp/
 data/vcf/
 data/snp/*
 result/*
-
+fastas
 *.sra
 *.sam
 *.fasta
@@ -16,3 +18,5 @@ result/*
 *.fq
 *.bam
 out.png
+data/samples*
+solcap*
