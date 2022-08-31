@@ -43,7 +43,7 @@ QCTRIM=$REPORT/trim
 #cat url.list | parallel -j 8 wget -O {#}.html {}
 echo "Descargando las secuencias de referencia de SpudDB"
 cd $FASTA
-cat $DATA/files.txt | parallel wget -N {}
+cat $DATA/referencefiles.txt | parallel wget -N {}
 cd $DIR
 # Detectando Distro
 printf "Detectando la distribucion Linux\n"
