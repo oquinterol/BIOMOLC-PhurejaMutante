@@ -12,10 +12,9 @@ ___
     <img alt="BIOMOLC logo" src="./docs/biomolc.png" width="300">
   </a>
   <br>Grupo de Investigación BIOMOLC
+  <br>Semillero de Agrigenómica
 </h2>
-<h3 align="center"><br>Semillero de Agrigenómica</h3>    
-<h4 align="center"><br><font size="4"> Universidad Distrital Francisco José de Caldas</font></h4>
-
+<h3 align="center">Universidad Distrital Francisco José de Caldas</h3>
 
 ## Instalación
 - Las dependencias necesarias para hacer uso del pipeline.
