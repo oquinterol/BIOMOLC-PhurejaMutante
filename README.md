@@ -14,7 +14,7 @@ ___
   <br>Grupo de Investigación BIOMOLC
   <br>Semillero de Agrigenómica
 </h1>
-<h2 align="center">Universidad Distrital Francisco José de Caldas</h3>
+<h3 align="center">Universidad Distrital Francisco José de Caldas</h3>
 
 ## Instalación
 - Las dependencias necesarias para hacer uso del pipeline.
