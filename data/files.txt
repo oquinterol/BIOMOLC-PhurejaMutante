@@ -1,3 +1,0 @@
-http://spuddb.uga.edu/data/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa.gz
-http://spuddb.uga.edu/data/DM_1-3_516_R44_potato.v6.1.hc_gene_models.cdna.fa.gz
-http://spuddb.uga.edu/data/DM_1-3_516_R44_potato.v6.1.hc_gene_models.gff3.gz
