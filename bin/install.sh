@@ -51,20 +51,28 @@ sudo clear
 echo "Detectando la distribucion Linux"
 DISTRIB=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
 echo "La Distribución es $DISTRIB"
+sleep 3s
 # Verifica si el gestor paquetes existe
 if [[ -f /usr/bin/apt ]];
 then
 	echo "Usando apt para descargar dependencias"
+	sleep 1s
 	sudo apt update
 	# Paquete FastQC y Gestor de paquetes pip de python3 entre otras...
 	sudo apt install build-essential fastqc python3-pip pigz gzip samtools bcftools bwa bowtie2 r-base firefox parallel 
-	# Usando pip para instalar cutadapt y multiqc
+	# Usando pip para instalar cutadapt y multiqc y otras
 	# python3 -m pip install --user --upgrade cutadapt
 	python3 -m pip install cutadapt multiqc HTSeq biopython
 
 elif [[ -f /usr/bin/pacman ]]; then
 	echo "Usando pacman para descargar dependencias"
-	
+	sleep 1s
+	# Repositorios Oficiales
+	sudo pacman --noconfirm -Syyu python-pip base-devel fastqc yay r firefox parallel
+	# Usando AUR para descargar los paquetes
+	yay --noconfirm -Syyu samtools bcftools bwa pigz gzip
+	# Python pip instala paquetes faltantes
+	pip install cutadapt multiqc HTSeq biopython
 fi
 # Instalación de TrimGalore
 if [[ -f ~/.local/bin/trim_galore ]]
@@ -79,9 +87,11 @@ else
 	find $DIR -iname "trim_galore" -type f -not -path '*/bin/*' -exec mv {} ~/.local/bin/ \;
 	# Borramos los datos de instalación
 	find $DIR \(-iname "trim_galore*" -o -iname "TrimGalore*" \) -not -path '*/bin/*' -exec rm -r {} \;
-	echo "TrimGalore! Instalado en el PATH para el usuario"
+	echo "TrimGalore! Instalado en el PATH para el usuario ~/.local/bin"
 fi
 
 # Instalacion librerias R
 echo "La instalacion liberias R"
-Rscript ./bin/r-paquetes.R
+Rscript ./bin/r-paquetes.r
+
+echo "Instalacion finalizada, ya se puede hacer uso del pipeline"
