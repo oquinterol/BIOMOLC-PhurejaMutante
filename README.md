@@ -17,13 +17,28 @@ ___
 <h3 align="center">Universidad Distrital Francisco José de Caldas</h3>
 
 ## Instalación
-- Las dependencias necesarias para hacer uso del pipeline.
+- Para las principales distribuciones basadas en Debian y en Arch Linux.
+
+    - Distribución basada en Debian (Ubuntu, Linux Mint, Pop OS!, etc)
+        
+        ```sh
+        sudo apt install make git curl
+        ```
+
+    - Distribución basada en Arch (Manjaro, Crystal, etc)
+        
+        ```sh
+        sudo pacman -Syyu make git curl
+        ```
+    
+    Esas son las dependencias básicas que permitirán automatizar la instalación de las otras dependencias y programas necesarios.
 
     ```sh
     git clone https://github.com/quinterol/BIOMOLC-PhurejaMutante.git Pipeline_Phureja
     cd Pipeline_Phureja
     make install
     ```
+    
 ## Uso
 Agregar los archivos SRA dentro de `./data/sra` para hacer uso de la herramienta, para ello con **make** se puede acceder a todas las opciones.
 
