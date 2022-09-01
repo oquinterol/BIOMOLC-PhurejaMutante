@@ -93,6 +93,15 @@ else
 	echo "TrimGalore! Instalado en el PATH para el usuario ~/.local/bin"
 fi
 
+# Exportando el PATH del usuario para hacer disponibles los programas al usuario
+if [[ -f /usr/bin/zsh ]]
+then
+	echo 'PATH para pipeline Phureja y paquetes python pip' >> $HOME/.zshrc
+	echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.zshrc
+ elif [[ -f /usr/bin/bash ]]
+	echo 'PATH para pipeline Phureja y paquetes python pip ' >> $HOME/.bashrc
+	echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
+fi
 
 # Descarga de los datos de Referencia (Phujera) SpudDB
 # Ejemplo
@@ -103,3 +112,4 @@ cat $DATA/referencefiles.txt | parallel wget -N {}
 cd $DIR
 
 echo "Instalacion finalizada, ya se puede hacer uso del pipeline"
+echo "Cierra esta terminal y abre una nueva para cargar los cambios"
