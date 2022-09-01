@@ -63,7 +63,8 @@ then
 	echo "La instalacion liberias R"
 	sudo Rscript ./bin/r-paquetes.r
 
-elif [[ -f /usr/bin/pacman ]]; then
+elif [[ -f /usr/bin/pacman ]]; 
+then
 	echo "Usando pacman para descargar dependencias"
 	sleep 1s
 	# Repositorios Oficiales
@@ -77,7 +78,7 @@ elif [[ -f /usr/bin/pacman ]]; then
 	Rscript ./bin/r-paquetes.r
 fi
 # Instalación de TrimGalore
-if [[ -f ~/.local/bin/trim_galore ]]
+if [[ -f ~/.local/bin/trim_galore ]];
 then
 	echo "trim_galore esta instalado en su sistema"
 else
@@ -94,11 +95,12 @@ else
 fi
 
 # Exportando el PATH del usuario para hacer disponibles los programas al usuario
-if [[ -f /usr/bin/zsh ]]
+if [[ -f /usr/bin/zsh ]];
 then
 	echo 'PATH para pipeline Phureja y paquetes python pip' >> $HOME/.zshrc
 	echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.zshrc
- elif [[ -f /usr/bin/bash ]]
+elif [[ -f /usr/bin/bash ]];
+then
 	echo 'PATH para pipeline Phureja y paquetes python pip ' >> $HOME/.bashrc
 	echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
 fi
