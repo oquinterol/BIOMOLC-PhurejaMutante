@@ -22,6 +22,7 @@
 #         ├── both
 #         └── raw
 mkdir -p ./{bin,data/{bam/sort,dea,fasta,fastq/{raw,trim},fastqc/{raw,trim},sam,sra,vcf},docs,result/report/{raw,both}}
+
 # Cargar las variables de directorios
 DIR=$(pwd)
 DATA=$DIR/data
@@ -38,6 +39,7 @@ RESULT=$DIR/result
 REPORT=$RESULT/report
 QCRAW=$REPORT/raw
 QCTRIM=$REPORT/trim
+
 # Detectando Distro
 echo "Acceso sudo para instalar dependecias"
 sudo clear
@@ -45,6 +47,7 @@ echo "Detectando la distribucion Linux"
 DISTRIB=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
 echo "La Distribución es $DISTRIB"
 sleep 3s
+
 # Verifica si el gestor paquetes existe
 if [[ -f /usr/bin/apt ]];
 then
