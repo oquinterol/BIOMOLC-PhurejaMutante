@@ -82,7 +82,8 @@ else
 	# busca el script y lo mueve al bin del repo
 	find $DIR -iname "trim_galore" -type f -not -path '*/bin/*' -exec mv {} ~/.local/bin/ \;
 	# Borramos los datos de instalación
-	find $DIR \(-iname "trim_galore*" -o -iname "TrimGalore*" \) -not -path '*/bin/*' -exec rm -r {} \;
+	find $DIR -iname "trim_galore*" -not -path '*/bin/*' -exec rm -r {} \;
+	find $DIR -iname "TrimGalore*" -not -path '*/bin/*' -exec rm -r {} \;
 	echo "TrimGalore! Instalado en el PATH para el usuario ~/.local/bin"
 fi
 
