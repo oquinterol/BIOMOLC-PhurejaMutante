@@ -46,20 +46,30 @@ cd $FASTA
 cat $DATA/referencefiles.txt | parallel wget -N {}
 cd $DIR
 # Detectando Distro
-printf "Detectando la distribucion Linux\n"
+echo "Acceso sudo para instalar dependecias"
+sudo clear
+echo "Detectando la distribucion Linux"
 DISTRIB=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
-if [[ ${DISTRIB} == *"Ubuntu"* ]] || [[ ${DISTRIB} == *"Debian"* ]] || [[ ${DISTRIB} == *"Pop!_OS"* ]];
+echo "La Distribución es $DISTRIB"
+# Verifica si el gestor paquetes existe
+if [[ -f /usr/bin/apt ]];
 then
 	echo "Usando apt para descargar dependencias"
-elif [[ ${DISTRIB} == *"Manjaro"* ]] || [[ ${DISTRIB} == *"Arch"* ]]; then
+	sudo apt update
+	# Paquete FastQC y Gestor de paquetes pip de python3 entre otras...
+	sudo apt install build-essential fastqc python3-pip pigz gzip samtools bwa bowtie2 r-base 
+	# Usando pip para instalar cutadapt y multiqc
+	python3 -m pip install --user --upgrade cutadapt multiqc HTSeq
+
+
+elif [[ -f /usr/bin/pacman ]]; then
 	echo "Usando pacman para descargar dependencias"
 fi
-
+# Instalación de TrimGalore
 if [[ -f ~/.local/bin/trim_galore ]]
 then
 	echo "trim_galore esta instalado en su sistema"
 else
-	# Instalación de TrimGalore
 	# Descarga del repo
 	curl -fsSL https://github.com/FelixKrueger/TrimGalore/archive/refs/tags/0.6.7.tar.gz -o trim_galore.tar.gz
 	# Descompresion
