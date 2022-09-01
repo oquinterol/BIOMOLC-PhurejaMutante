@@ -90,4 +90,6 @@ fi
 
 # Instalacion librerias R
 echo "La instalacion liberias R"
-Rscript ./bin/r-paquetes.R
+Rscript ./bin/r-paquetes.r
+
+echo "Instalacion finalizada, ya se puede hacer uso del pipeline"
