@@ -79,4 +79,9 @@ else
 	find $DIR -iname "trim_galore" -type f -not -path '*/bin/*' -exec mv {} ~/.local/bin/ \;
 	# Borramos los datos de instalación
 	find $DIR \(-iname "trim_galore*" -o -iname "TrimGalore*" \) -not -path '*/bin/*' -exec rm -r {} \;
+	echo "TrimGalore! Instalado en el PATH para el usuario"
 fi
+
+# Instalacion librerias R
+echo "La instalacion liberias R"
+Rscript ./bin/r-paquetes.R
