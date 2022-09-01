@@ -38,13 +38,6 @@ RESULT=$DIR/result
 REPORT=$RESULT/report
 QCRAW=$REPORT/raw
 QCTRIM=$REPORT/trim
-# Descarga de los datos de Referencia (Phujera) SpudDB
-# Ejemplo
-#cat url.list | parallel -j 8 wget -O {#}.html {}
-echo "Descargando las secuencias de referencia de SpudDB"
-cd $FASTA
-cat $DATA/referencefiles.txt | parallel wget -N {}
-cd $DIR
 # Detectando Distro
 echo "Acceso sudo para instalar dependecias"
 sudo clear
@@ -93,5 +86,13 @@ fi
 # Instalacion librerias R
 echo "La instalacion liberias R"
 Rscript ./bin/r-paquetes.r
+
+# Descarga de los datos de Referencia (Phujera) SpudDB
+# Ejemplo
+#cat url.list | parallel -j 8 wget -O {#}.html {}
+echo "Descargando las secuencias de referencia de SpudDB"
+cd $FASTA
+cat $DATA/referencefiles.txt | parallel wget -N {}
+cd $DIR
 
 echo "Instalacion finalizada, ya se puede hacer uso del pipeline"
