@@ -1,13 +1,11 @@
 #!/bin/bash
 # Pequeña lista de los programas que uso.
-# - FastQC
+# - FastQC # Generalmente en los repositorios oficiales
 # - MultiQC
 # - cutadapt
 # - sra-tools
 # - TrimGalore (Automatic detetection)
 # - Pigz (Compresion o Descompresion de gzip multihilo)
-
-python3 -m pip install --user --upgrade cutadapt
-
-
-#pip cutadapt multiqc 
+# - samtools
+# - bfctools
+#  pip cutadapt multiqc 
