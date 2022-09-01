@@ -48,14 +48,14 @@ DISTRIB=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
 echo "La Distribución es $DISTRIB"
 sleep 3s
 
-# Verifica si el gestor paquetes existe
+# Verifica el gestor paquetes existente
 if [[ -f /usr/bin/apt ]];
 then
 	echo "Usando apt para descargar dependencias"
 	sleep 1s
-	sudo apt update
+	sudo apt -y update
 	# Paquete FastQC y Gestor de paquetes pip de python3 entre otras...
-	sudo apt install build-essential fastqc python3-pip pigz gzip samtools bcftools bwa bowtie2 r-base firefox parallel 
+	sudo apt install -y tree build-essential fastqc python3-pip pigz gzip samtools bcftools bwa bowtie2 r-base firefox parallel 
 	# Usando pip para instalar cutadapt y multiqc y otras
 	# python3 -m pip install --user --upgrade cutadapt
 	python3 -m pip install cutadapt multiqc HTSeq biopython
@@ -64,7 +64,7 @@ elif [[ -f /usr/bin/pacman ]]; then
 	echo "Usando pacman para descargar dependencias"
 	sleep 1s
 	# Repositorios Oficiales
-	sudo pacman --noconfirm -Syyu python-pip base-devel fastqc yay r firefox parallel
+	sudo pacman --noconfirm -Syyu tree python-pip base-devel fastqc yay r firefox parallel
 	# Usando AUR para descargar los paquetes
 	yay --noconfirm -Syyu samtools bcftools bwa pigz gzip
 	# Python pip instala paquetes faltantes
