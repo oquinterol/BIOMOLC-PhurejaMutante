@@ -57,13 +57,14 @@ then
 	echo "Usando apt para descargar dependencias"
 	sudo apt update
 	# Paquete FastQC y Gestor de paquetes pip de python3 entre otras...
-	sudo apt install build-essential fastqc python3-pip pigz gzip samtools bwa bowtie2 r-base 
+	sudo apt install build-essential fastqc python3-pip pigz gzip samtools bcftools bwa bowtie2 r-base firefox parallel 
 	# Usando pip para instalar cutadapt y multiqc
-	python3 -m pip install --user --upgrade cutadapt multiqc HTSeq
-
+	# python3 -m pip install --user --upgrade cutadapt
+	python3 -m pip install cutadapt multiqc HTSeq biopython
 
 elif [[ -f /usr/bin/pacman ]]; then
 	echo "Usando pacman para descargar dependencias"
+	
 fi
 # Instalación de TrimGalore
 if [[ -f ~/.local/bin/trim_galore ]]
@@ -78,4 +79,9 @@ else
 	find $DIR -iname "trim_galore" -type f -not -path '*/bin/*' -exec mv {} ~/.local/bin/ \;
 	# Borramos los datos de instalación
 	find $DIR \(-iname "trim_galore*" -o -iname "TrimGalore*" \) -not -path '*/bin/*' -exec rm -r {} \;
+	echo "TrimGalore! Instalado en el PATH para el usuario"
 fi
+
+# Instalacion librerias R
+echo "La instalacion liberias R"
+Rscript ./bin/r-paquetes.R
