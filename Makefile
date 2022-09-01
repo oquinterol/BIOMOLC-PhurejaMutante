@@ -3,6 +3,7 @@ result: dea snp
 	
 dea: bamsort
 	./bin/dea.sh
+	./bin/dea-r.r
 snp: bamsort
 	./bin/snpcall.sh
 bamsort: sam2bam
