@@ -59,6 +59,9 @@ then
 	# Usando pip para instalar cutadapt y multiqc y otras
 	# python3 -m pip install --user --upgrade cutadapt
 	python3 -m pip install cutadapt multiqc HTSeq biopython
+	# Instalacion librerias R
+	echo "La instalacion liberias R"
+	sudo Rscript ./bin/r-paquetes.r
 
 elif [[ -f /usr/bin/pacman ]]; then
 	echo "Usando pacman para descargar dependencias"
@@ -69,6 +72,9 @@ elif [[ -f /usr/bin/pacman ]]; then
 	yay --noconfirm -Syyu samtools bcftools bwa pigz gzip
 	# Python pip instala paquetes faltantes
 	pip install cutadapt multiqc HTSeq biopython
+	# Instalacion librerias R
+	echo "La instalacion liberias R"
+	Rscript ./bin/r-paquetes.r
 fi
 # Instalación de TrimGalore
 if [[ -f ~/.local/bin/trim_galore ]]
@@ -87,9 +93,6 @@ else
 	echo "TrimGalore! Instalado en el PATH para el usuario ~/.local/bin"
 fi
 
-# Instalacion librerias R
-echo "La instalacion liberias R"
-Rscript ./bin/r-paquetes.r
 
 # Descarga de los datos de Referencia (Phujera) SpudDB
 # Ejemplo
