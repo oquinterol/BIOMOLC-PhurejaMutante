@@ -68,9 +68,9 @@ then
 	echo "Usando pacman para descargar dependencias"
 	sleep 1s
 	# Repositorios Oficiales
-	sudo pacman --noconfirm -Syyu tree python-pip base-devel fastqc yay r firefox parallel
+	sudo pacman --noconfirm -Syy tree python-pip base-devel fastqc yay r firefox parallel
 	# Usando AUR para descargar los paquetes
-	yay --noconfirm -Syyu samtools bcftools bwa pigz gzip
+	yay --noconfirm -Syy samtools bcftools bwa pigz gzip
 	# Python pip instala paquetes faltantes
 	pip install cutadapt multiqc HTSeq biopython
 	# Instalacion librerias R
