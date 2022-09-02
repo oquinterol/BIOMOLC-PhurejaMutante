@@ -44,9 +44,10 @@ QCTRIM=$REPORT/trim
 echo "Acceso sudo para instalar dependecias"
 sudo clear
 echo "Detectando la distribucion Linux"
+sleep 1s
 DISTRIB=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
 echo "La Distribución es $DISTRIB"
-sleep 3s
+sleep 2s
 
 # Verifica el gestor paquetes existente
 if [[ -f /usr/bin/apt ]];
@@ -68,9 +69,9 @@ then
 	echo "Usando pacman para descargar dependencias"
 	sleep 1s
 	# Repositorios Oficiales
-	sudo pacman --noconfirm -Syyu tree python-pip base-devel fastqc yay r firefox parallel
+	sudo pacman --noconfirm -Syy tree python-pip base-devel fastqc yay r firefox parallel
 	# Usando AUR para descargar los paquetes
-	yay --noconfirm -Syyu samtools bcftools bwa pigz gzip
+	yay --noconfirm -Syy samtools bcftools bwa pigz gzip
 	# Python pip instala paquetes faltantes
 	pip install cutadapt multiqc HTSeq biopython
 	# Instalacion librerias R
@@ -97,16 +98,16 @@ fi
 # Exportando el PATH del usuario para hacer disponibles los programas al usuario
 if [[ -f /usr/bin/zsh ]];
 then
-	echo 'PATH para pipeline Phureja y paquetes python pip' >> $HOME/.zshrc
+	echo '# PATH para pipeline Phureja y paquetes python pip' >> $HOME/.zshrc
 	echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.zshrc
 elif [[ -f /usr/bin/bash ]];
 then
-	echo 'PATH para pipeline Phureja y paquetes python pip ' >> $HOME/.bashrc
+	echo '# PATH para pipeline Phureja y paquetes python pip ' >> $HOME/.bashrc
 	echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
 fi
 
 # Descarga de los datos de Referencia (Phujera) SpudDB
-# Ejemplo
+# Ejemplo -j le dice cuentos trabajos se pueden paralelizar
 #cat url.list | parallel -j 8 wget -O {#}.html {}
 echo "Descargando las secuencias de referencia de SpudDB"
 cd $FASTA
