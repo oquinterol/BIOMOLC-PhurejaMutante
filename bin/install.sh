@@ -97,11 +97,11 @@ fi
 # Exportando el PATH del usuario para hacer disponibles los programas al usuario
 if [[ -f /usr/bin/zsh ]];
 then
-	echo 'PATH para pipeline Phureja y paquetes python pip' >> $HOME/.zshrc
+	echo '# PATH para pipeline Phureja y paquetes python pip' >> $HOME/.zshrc
 	echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.zshrc
 elif [[ -f /usr/bin/bash ]];
 then
-	echo 'PATH para pipeline Phureja y paquetes python pip ' >> $HOME/.bashrc
+	echo '# PATH para pipeline Phureja y paquetes python pip ' >> $HOME/.bashrc
 	echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
 fi
 
