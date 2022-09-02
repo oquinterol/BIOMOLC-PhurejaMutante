@@ -1,17 +1,15 @@
 # Modulos del pipline
-result: dea snp
-	
 dea: bamsort
 	./bin/dea.sh
-	./bin/dea-r.r
+	Rscirpt ./bin/dea-r.r
 snp: bamsort
 	./bin/snpcall.sh
 bamsort: sam2bam
-	./bin/bamsort.sh ./data/bam/sort/*.bam
+	./bin/bamsort.sh
 sam2bam: align
-	./bin/sam2bam.sh ./data/bam/*.bam
+	./bin/sam2bam.sh
 align: trim
-	./bin/align.sh 
+	./bin/align.sh
 trim: sra2fq
 	./bin/trim.sh
 qctrim: trim
