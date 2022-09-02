@@ -44,9 +44,10 @@ QCTRIM=$REPORT/trim
 echo "Acceso sudo para instalar dependecias"
 sudo clear
 echo "Detectando la distribucion Linux"
+sleep 1s
 DISTRIB=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
 echo "La Distribución es $DISTRIB"
-sleep 3s
+sleep 2s
 
 # Verifica el gestor paquetes existente
 if [[ -f /usr/bin/apt ]];
@@ -106,7 +107,7 @@ then
 fi
 
 # Descarga de los datos de Referencia (Phujera) SpudDB
-# Ejemplo
+# Ejemplo -j le dice cuentos trabajos se pueden paralelizar
 #cat url.list | parallel -j 8 wget -O {#}.html {}
 echo "Descargando las secuencias de referencia de SpudDB"
 cd $FASTA
