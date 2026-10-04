@@ -1,0 +1,12 @@
+name: phureja-rnaseq-tools
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - pyyaml=6.0.3
+  - hisat2=2.2.1
+  - subread=2.0.6
+  - samtools=1.22.1
+  - fastqc=0.12.1
+  - multiqc=1.32

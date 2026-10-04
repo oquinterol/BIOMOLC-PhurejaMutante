@@ -21,3 +21,16 @@ out.png
 data/samples*
 solcap*
 *.old
+
+# Python / workflow runtime artifacts
+__pycache__/
+*.py[cod]
+.snakemake/
+.venv/
+.tools/
+references/
+*.fastq.gz
+*.fastq
+*.fa
+*.fa.gz
+*.gff3.gz
