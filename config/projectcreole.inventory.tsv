@@ -1,0 +1,16 @@
+sample_id	observed_folder	fastq_relative_to_projectcreole
+Clon17	25days	CreoleRawData/RNA-Seq/RawData/25days/Clon17_1.fastq.gz
+Clon39	25days	CreoleRawData/RNA-Seq/RawData/25days/Clon39_1.fastq.gz
+Clon43	25days	CreoleRawData/RNA-Seq/RawData/25days/Clon43_1.fastq.gz
+Clon_Colombia	25days	CreoleRawData/RNA-Seq/RawData/25days/Clon_Colombia_1.fastq.gz
+florblanca	25days	CreoleRawData/RNA-Seq/RawData/25days/florblanca_1.fastq.gz
+Clon17R2	Flowering	CreoleRawData/RNA-Seq/RawData/Flowering/Clon17R2_1.fastq.gz
+Clon39R2	Flowering	CreoleRawData/RNA-Seq/RawData/Flowering/Clon39R2_1.fastq.gz
+Clon43R2	Flowering	CreoleRawData/RNA-Seq/RawData/Flowering/Clon43R2_1.fastq.gz
+ClonColombiaR2	Flowering	CreoleRawData/RNA-Seq/RawData/Flowering/ClonColombiaR2_1.fastq.gz
+ClonmutanteR2	Flowering	CreoleRawData/RNA-Seq/RawData/Flowering/ClonmutanteR2_1.fastq.gz
+Clon17R3	Meristem	CreoleRawData/RNA-Seq/RawData/Meristem/Clon17R3_1.fastq.gz
+Clon39R3	Meristem	CreoleRawData/RNA-Seq/RawData/Meristem/Clon39R3_1.fastq.gz
+Clon43R3	Meristem	CreoleRawData/RNA-Seq/RawData/Meristem/Clon43R3_1.fastq.gz
+ClonColombiaR3	Meristem	CreoleRawData/RNA-Seq/RawData/Meristem/ClonColombiaR3_1.fastq.gz
+ClonmutanteR3	Meristem	CreoleRawData/RNA-Seq/RawData/Meristem/ClonmutanteR3_1.fastq.gz
