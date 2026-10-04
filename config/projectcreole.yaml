@@ -1,0 +1,22 @@
+# Complete data run: first confirm layout and strandedness in the sample table.
+samples: config/samples-projectcreole.tsv
+data_root: /data/ProjectCreole
+output_dir: result/projectcreole
+allow_unconfirmed_library: false
+smoke:
+  enabled: false
+analysis:
+  mode: exploratory
+  pseudocount_cpm: 1.0
+  low_count_threshold: 10
+  # Add explicit same-stage descriptive comparisons only after checking identities.
+  contrasts: []
+threads:
+  index: 4
+  align: 4
+  count: 4
+memory_mb:
+  reference: 2048
+  index: 16000
+  align: 4096
+  count: 2048

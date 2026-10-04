@@ -1,0 +1,16 @@
+sample_id	fastq1	fastq2	layout	strandedness	stage	genotype
+Clon17	CreoleRawData/RNA-Seq/RawData/25days/Clon17_1.fastq.gz		single	unknown	25days	Clon17
+Clon39	CreoleRawData/RNA-Seq/RawData/25days/Clon39_1.fastq.gz		single	unknown	25days	Clon39
+Clon43	CreoleRawData/RNA-Seq/RawData/25days/Clon43_1.fastq.gz		single	unknown	25days	Clon43
+Clon_Colombia	CreoleRawData/RNA-Seq/RawData/25days/Clon_Colombia_1.fastq.gz		single	unknown	25days	ClonColombia
+florblanca	CreoleRawData/RNA-Seq/RawData/25days/florblanca_1.fastq.gz		single	unknown	25days	florblanca
+Clon17R2	CreoleRawData/RNA-Seq/RawData/Flowering/Clon17R2_1.fastq.gz		single	unknown	Flowering	Clon17
+Clon39R2	CreoleRawData/RNA-Seq/RawData/Flowering/Clon39R2_1.fastq.gz		single	unknown	Flowering	Clon39
+Clon43R2	CreoleRawData/RNA-Seq/RawData/Flowering/Clon43R2_1.fastq.gz		single	unknown	Flowering	Clon43
+ClonColombiaR2	CreoleRawData/RNA-Seq/RawData/Flowering/ClonColombiaR2_1.fastq.gz		single	unknown	Flowering	ClonColombia
+ClonmutanteR2	CreoleRawData/RNA-Seq/RawData/Flowering/ClonmutanteR2_1.fastq.gz		single	unknown	Flowering	Clonmutante
+Clon17R3	CreoleRawData/RNA-Seq/RawData/Meristem/Clon17R3_1.fastq.gz		single	unknown	Meristem	Clon17
+Clon39R3	CreoleRawData/RNA-Seq/RawData/Meristem/Clon39R3_1.fastq.gz		single	unknown	Meristem	Clon39
+Clon43R3	CreoleRawData/RNA-Seq/RawData/Meristem/Clon43R3_1.fastq.gz		single	unknown	Meristem	Clon43
+ClonColombiaR3	CreoleRawData/RNA-Seq/RawData/Meristem/ClonColombiaR3_1.fastq.gz		single	unknown	Meristem	ClonColombia
+ClonmutanteR3	CreoleRawData/RNA-Seq/RawData/Meristem/ClonmutanteR3_1.fastq.gz		single	unknown	Meristem	Clonmutante

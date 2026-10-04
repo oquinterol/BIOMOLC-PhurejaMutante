@@ -1,0 +1,312 @@
+"""Exploratory RNA-seq: explicit samples, splice-aware alignment and exon counts."""
+import json
+from pathlib import Path
+import shlex
+import sys
+
+configfile: "config/reference-spuddb.yaml"
+configfile: "config/smoke.yaml"
+
+SCRIPTS = str(Path(workflow.basedir) / "scripts")
+sys.path.insert(0, SCRIPTS)
+from pipeline_common import load_samples
+
+SAMPLES = load_samples(config)
+IDS = list(SAMPLES)
+OUT = config["output_dir"].rstrip("/")
+SMOKE = config["smoke"]["enabled"]
+REF = config["reference"]
+HELPER = f"{SCRIPTS}/pipeline_common.py"
+if SMOKE and (int(config["smoke"]["reads"]) < 1 or int(config["smoke"]["max_bases"]) < 1):
+    raise ValueError("Smoke read/region limits must be positive")
+for source in [REF["fasta"], REF["gff3"], *[r[k] for r in SAMPLES.values() for k in ["fastq1", "fastq2"] if r[k]]]:
+    if Path(OUT).resolve() in Path(source).resolve().parents:
+        raise ValueError("Output directory must not contain original reads/reference inputs")
+
+VALID = f"{OUT}/provenance/runtime.json"
+RESOLVED = f"{OUT}/provenance/config.yaml"
+FASTA = f"{OUT}/reference/genome.fa"
+SAF = f"{OUT}/reference/exons.saf"
+SPLICE = f"{OUT}/reference/splice_sites.tsv"
+GENES = f"{OUT}/reference/genes.tsv"
+REFMAN = f"{OUT}/reference/manifest.json"
+INDEX = f"{OUT}/reference/hisat2_index"
+COUNTDIR = f"{OUT}/counts"
+TABLEDIR = f"{OUT}/tables"
+MATES = [(sid, m) for sid in IDS for m in (["R1", "R2"] if SAMPLES[sid]["layout"] == "paired" else ["R1"])]
+QCZIP = [f"{OUT}/qc/fastqc/{sid}_{m}_fastqc.zip" for sid, m in MATES]
+QCLOGS = [f"{OUT}/logs/{kind}/{s}.log" for kind in ["align", "count"] for s in IDS]
+TABLES = [f"{TABLEDIR}/{s}" for s in ["raw_counts.tsv", "cpm.tsv", "log2_cpm.tsv", "gene_lengths.tsv", "library_sizes.tsv", "samples.tsv", "descriptive_ratios.tsv", "report.json"]]
+
+
+def source_read(wc):
+    row = SAMPLES[wc.sample]
+    key = "fastq1" if wc.mate == "R1" else "fastq2"
+    if not row[key]:
+        raise ValueError(f"Sample {wc.sample} has no {wc.mate}")
+    return row[key]
+
+
+def read_path(sid, mate):
+    return f"{OUT}/reads/{sid}_{mate}.fastq.gz" if SMOKE else SAMPLES[sid]["fastq1" if mate == "R1" else "fastq2"]
+
+
+def align_options(wc):
+    row = SAMPLES[wc.sample]
+    options = ["-1", read_path(wc.sample, "R1"), "-2", read_path(wc.sample, "R2")] if row["layout"] == "paired" else ["-U", read_path(wc.sample, "R1")]
+    if row["strandedness"] in {"forward", "reverse"}:
+        strand = "F" if row["strandedness"] == "forward" else "R"
+        paired_strand = f"{strand}{'R' if strand == 'F' else 'F'}"
+        options.extend(["--rna-strandness", paired_strand if row["layout"] == "paired" else strand])
+    return shlex.join(options)
+
+
+shell.executable("bash")
+wildcard_constraints:
+    mate="R1|R2"
+
+rule all:
+    input:
+        TABLES,
+        f"{OUT}/qc/multiqc_report.html",
+        REFMAN,
+        expand(f"{OUT}/bam/{{sample}}.bam.bai", sample=IDS)
+
+rule validate:
+    input:
+        sample_table=config["samples"],
+        reads=[r[k] for r in SAMPLES.values() for k in ["fastq1", "fastq2"] if r[k]],
+        code=f"{SCRIPTS}/validate_inputs.py",
+        helper=HELPER
+    output:
+        runtime=VALID,
+        resolved=RESOLVED
+    params:
+        configuration=json.dumps(config, sort_keys=True)
+    log:
+        f"{OUT}/logs/validate.log"
+    conda:
+        "envs/tools.yaml"
+    resources:
+        mem_mb=256,
+        runtime=5
+    shell:
+        "python {input.code:q} --config-json {params.configuration:q} --runtime {output.runtime:q} --resolved {output.resolved:q} > {log:q} 2>&1"
+
+if REF.get("download", False):
+    rule fetch_genome:
+        input:
+            code=f"{SCRIPTS}/fetch_reference.py"
+        output:
+            fasta=REF["fasta"],
+            manifest=f"{REF['fasta']}.json"
+        params:
+            url=REF["fasta_url"],
+            checksum=shlex.join(["--sha256", REF["fasta_sha256"]]) if REF.get("fasta_sha256") else ""
+        log:
+            f"{OUT}/logs/download-genome.log"
+        conda:
+            "envs/tools.yaml"
+        resources:
+            mem_mb=128,
+            runtime=60
+        shell:
+            "python {input.code:q} {params.url:q} {output.fasta:q} {params.checksum} --manifest {output.manifest:q} > {log:q} 2>&1"
+
+    rule fetch_annotation:
+        input:
+            code=f"{SCRIPTS}/fetch_reference.py"
+        output:
+            gff=REF["gff3"],
+            manifest=f"{REF['gff3']}.json"
+        params:
+            url=REF["gff3_url"],
+            checksum=shlex.join(["--sha256", REF["gff3_sha256"]]) if REF.get("gff3_sha256") else ""
+        log:
+            f"{OUT}/logs/download-annotation.log"
+        conda:
+            "envs/tools.yaml"
+        resources:
+            mem_mb=128,
+            runtime=30
+        shell:
+            "python {input.code:q} {params.url:q} {output.gff:q} {params.checksum} --manifest {output.manifest:q} > {log:q} 2>&1"
+
+rule prepare_reference:
+    input:
+        fasta=REF["fasta"],
+        gff=REF["gff3"],
+        validation=VALID,
+        code=f"{SCRIPTS}/prepare_reference.py"
+    output:
+        fasta=FASTA,
+        saf=SAF,
+        splices=SPLICE,
+        genes=GENES,
+        manifest=REFMAN
+    params:
+        outdir=lambda wc, output: str(Path(output.fasta).parent),
+        region=shlex.join(["--contig", str(config["smoke"]["contig"]), "--max-bases", str(config["smoke"]["max_bases"])]) if SMOKE else "",
+        checksum=shlex.join([value for key in ["fasta", "gff3"] if REF.get(f"{key}_sha256") for value in [f"--{key}-sha256", REF[f"{key}_sha256"]]])
+    log:
+        f"{OUT}/logs/reference.log"
+    conda:
+        "envs/tools.yaml"
+    resources:
+        mem_mb=int(config["memory_mb"]["reference"]),
+        runtime=30
+    shell:
+        "python {input.code:q} --fasta {input.fasta:q} --gff3 {input.gff:q} --outdir {params.outdir:q} {params.region} {params.checksum} > {log:q} 2>&1"
+
+rule index_reference:
+    input:
+        fasta=FASTA
+    output:
+        directory(INDEX)
+    params:
+        prefix=lambda wc, output: str(Path(output[0]) / "genome")
+    threads: int(config["threads"]["index"])
+    log:
+        f"{OUT}/logs/hisat2-build.log"
+    conda:
+        "envs/tools.yaml"
+    resources:
+        mem_mb=int(config["memory_mb"]["index"]),
+        runtime=240
+    shell:
+        "mkdir -p {output:q}; hisat2-build -p {threads} {input.fasta:q} {params.prefix:q} > {log:q} 2>&1"
+
+rule subset_reads:
+    input:
+        read=source_read,
+        validation=VALID,
+        code=f"{SCRIPTS}/subset_fastq.py"
+    output:
+        f"{OUT}/reads/{{sample}}_{{mate}}.fastq.gz"
+    params:
+        reads=int(config["smoke"].get("reads", 10000))
+    log:
+        f"{OUT}/logs/subset/{{sample}}_{{mate}}.json"
+    conda:
+        "envs/tools.yaml"
+    resources:
+        mem_mb=128,
+        runtime=5
+    shell:
+        "python {input.code:q} {input.read:q} {output:q} --reads {params.reads} --replace-workflow-output > {log:q}"
+
+rule fastqc:
+    input:
+        read=lambda wc: read_path(wc.sample, wc.mate),
+        validation=VALID,
+        code=f"{SCRIPTS}/qc_fastq.py"
+    output:
+        html=f"{OUT}/qc/fastqc/{{sample}}_{{mate}}_fastqc.html",
+        zip=f"{OUT}/qc/fastqc/{{sample}}_{{mate}}_fastqc.zip"
+    params:
+        outdir=lambda wc, output: str(Path(output.html).parent),
+        name=lambda wc: f"{wc.sample}_{wc.mate}"
+    log:
+        f"{OUT}/logs/fastqc/{{sample}}_{{mate}}.log"
+    conda:
+        "envs/tools.yaml"
+    resources:
+        mem_mb=512,
+        runtime=60
+    shell:
+        "python {input.code:q} --input {input.read:q} --name {params.name:q} --outdir {params.outdir:q} --log {log:q}"
+
+rule align:
+    input:
+        reads=lambda wc: [read_path(wc.sample, m) for m in (["R1", "R2"] if SAMPLES[wc.sample]["layout"] == "paired" else ["R1"])],
+        index=INDEX,
+        splices=SPLICE,
+        validation=VALID
+    output:
+        bam=f"{OUT}/bam/{{sample}}.bam",
+        bai=f"{OUT}/bam/{{sample}}.bam.bai",
+        flagstat=f"{OUT}/qc/alignment/{{sample}}.flagstat.txt"
+    params:
+        prefix=lambda wc, input: str(Path(input.index) / "genome"),
+        reads=align_options,
+        align_threads=lambda wc, threads: max(1, threads - 1)
+    threads: max(2, int(config["threads"]["align"]))
+    log:
+        hisat=f"{OUT}/logs/align/{{sample}}.log",
+        sort=f"{OUT}/logs/sort/{{sample}}.log"
+    conda:
+        "envs/tools.yaml"
+    resources:
+        mem_mb=int(config["memory_mb"]["align"]),
+        runtime=240
+    shell:
+        "hisat2 -p {params.align_threads} -x {params.prefix:q} --known-splicesite-infile {input.splices:q} --rg-id {wildcards.sample:q} {params.reads} 2> {log.hisat:q} | samtools sort -@ 0 -m 256M -o {output.bam:q} - 2> {log.sort:q}; samtools index {output.bam:q} {output.bai:q}; samtools flagstat {output.bam:q} > {output.flagstat:q}"
+
+rule count:
+    input:
+        bam=f"{OUT}/bam/{{sample}}.bam",
+        bai=f"{OUT}/bam/{{sample}}.bam.bai",
+        saf=SAF
+    output:
+        counts=f"{COUNTDIR}/{{sample}}.tsv",
+        summary=f"{COUNTDIR}/{{sample}}.tsv.summary"
+    params:
+        strand=lambda wc: SAMPLES[wc.sample]["count_strand"],
+        paired=lambda wc: "-p --countReadPairs -B -C" if SAMPLES[wc.sample]["layout"] == "paired" else ""
+    threads: int(config["threads"]["count"])
+    log:
+        f"{OUT}/logs/count/{{sample}}.log"
+    conda:
+        "envs/tools.yaml"
+    resources:
+        mem_mb=int(config["memory_mb"]["count"]),
+        runtime=120
+    shell:
+        "featureCounts -T {threads} -F SAF -a {input.saf:q} -o {output.counts:q} -s {params.strand} -Q 10 --primary {params.paired} {input.bam:q} > {log:q} 2>&1"
+
+rule summarize:
+    input:
+        counts=expand(f"{COUNTDIR}/{{sample}}.tsv", sample=IDS),
+        summaries=expand(f"{COUNTDIR}/{{sample}}.tsv.summary", sample=IDS),
+        config=RESOLVED,
+        code=f"{SCRIPTS}/summarize_counts.py",
+        helper=HELPER
+    output:
+        TABLES
+    params:
+        countdir=lambda wc, input: str(Path(input.counts[0]).parent),
+        outdir=lambda wc, output: str(Path(output[0]).parent)
+    log:
+        f"{OUT}/logs/summarize.log"
+    conda:
+        "envs/tools.yaml"
+    resources:
+        mem_mb=512,
+        runtime=30
+    shell:
+        "python {input.code:q} --config {input.config:q} --countdir {params.countdir:q} --outdir {params.outdir:q} > {log:q} 2>&1"
+
+rule multiqc:
+    input:
+        zips=QCZIP,
+        align=expand(f"{OUT}/qc/alignment/{{sample}}.flagstat.txt", sample=IDS),
+        counts=expand(f"{COUNTDIR}/{{sample}}.tsv.summary", sample=IDS),
+        logs=QCLOGS
+    output:
+        html=f"{OUT}/qc/multiqc_report.html",
+        data=directory(f"{OUT}/qc/multiqc_report_data")
+    params:
+        fastqc=lambda wc, input: str(Path(input.zips[0]).parent),
+        alignment=lambda wc, input: str(Path(input.align[0]).parent),
+        logs=lambda wc, input: str(Path(input.logs[0]).parent.parent),
+        counts=lambda wc, input: str(Path(input.counts[0]).parent),
+        outdir=lambda wc, output: str(Path(output.html).parent)
+    log:
+        f"{OUT}/logs/multiqc.log"
+    conda:
+        "envs/tools.yaml"
+    resources:
+        mem_mb=512,
+        runtime=30
+    shell:
+        "multiqc --force --no-ansi --filename multiqc_report.html --outdir {params.outdir:q} {params.fastqc:q} {params.alignment:q} {params.logs:q} {params.counts:q} > {log:q} 2>&1"

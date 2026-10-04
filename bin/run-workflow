@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Run the new workflow; legacy Make scripts are intentionally not invoked.
+set -euo pipefail
+ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+cd "$ROOT"
+if [[ -d "$ROOT/.tools/env/bin" ]]; then
+    export PATH="$ROOT/.tools/env/bin:$PATH"
+fi
+export PYTHONNOUSERSITE=1
+if [[ -x "$ROOT/.venv/bin/snakemake" ]]; then
+    RUNNER="$ROOT/.venv/bin/snakemake"
+else
+    RUNNER=$(command -v snakemake) || { echo 'Install requirements-workflow.txt first' >&2; exit 1; }
+fi
+exec "$RUNNER" --snakefile workflow/Snakefile "$@"

@@ -1,0 +1,10 @@
+reference:
+  name: SpudDB_DM_1-3_516_R44_v6.1_high_confidence
+  download: true
+  fasta: references/DM_v6_1/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa.gz
+  gff3: references/DM_v6_1/DM_1-3_516_R44_potato.v6.1.hc_gene_models.gff3.gz
+  fasta_url: https://spuddb.uga.edu/data/dm_v61/DM_1-3_516_R44_potato_genome_assembly.v6.1.fa.gz
+  gff3_url: https://spuddb.uga.edu/data/dm_v61/DM_1-3_516_R44_potato.v6.1.hc_gene_models.gff3.gz
+  # SHA-256 observed on the first download; not publisher-supplied checksums.
+  fasta_sha256: d661c478be7f452e81f43c23fe3117590879afb969b02fd7f2dc3224e79372b5
+  gff3_sha256: 31afeaf51102a518aa5c05994467adb8325d72da5e448203bae8bd8b341d7918

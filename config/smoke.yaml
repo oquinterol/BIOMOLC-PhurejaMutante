@@ -1,0 +1,27 @@
+samples: config/samples-smoke.tsv
+data_root: /data/ProjectCreole
+output_dir: result/snakemake-smoke
+allow_unconfirmed_library: true
+smoke:
+  enabled: true
+  reads: 10000
+  contig: chr01
+  max_bases: 2000000
+analysis:
+  mode: exploratory
+  pseudocount_cpm: 1.0
+  low_count_threshold: 10
+  # A technical example, not a validated biological contrast.
+  contrasts:
+    - name: technical_example_only
+      numerator: ClonmutanteR2
+      denominator: ClonColombiaR2
+threads:
+  index: 2
+  align: 2
+  count: 2
+memory_mb:
+  reference: 1024
+  index: 1024
+  align: 1024
+  count: 1024

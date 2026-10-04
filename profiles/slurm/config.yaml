@@ -1,0 +1,10 @@
+# Supply account/partition via --default-resources or a site-specific profile.
+executor: slurm
+jobs: 20
+latency-wait: 60
+printshellcmds: true
+rerun-incomplete: true
+default-resources:
+  mem_mb: 2048
+  runtime: 60
+retries: 1

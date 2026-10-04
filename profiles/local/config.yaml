@@ -1,0 +1,6 @@
+executor: local
+cores: 2
+resources:
+  mem_mb: 5000
+printshellcmds: true
+rerun-incomplete: true
