@@ -34,3 +34,32 @@ references/
 *.fa
 *.fa.gz
 *.gff3.gz
+
+# Private inputs and derived outputs (keep only the historical URL list).
+/data/*
+!/data/referencefiles.txt
+/results/
+*.fasta.gz
+*.fna
+*.fna.gz
+*.gff
+*.gff.gz
+*.gff3
+*.gtf
+*.gtf.gz
+*.bam.bai
+*.bai
+*.cram
+*.crai
+*.vcf
+*.vcf.gz
+*.bcf
+*.ht2
+*.ht2l
+
+# Per-user configuration and credentials.
+/config/local/
+.env
+.env.*
+*.pem
+*.key
