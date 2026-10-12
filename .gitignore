@@ -63,3 +63,7 @@ references/
 .env.*
 *.pem
 *.key
+
+# Documentation runtime and generated website.
+.venv-docs/
+/docs/_build/

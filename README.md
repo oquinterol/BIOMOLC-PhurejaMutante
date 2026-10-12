@@ -1,5 +1,8 @@
 # Pipeline RNA-seq exploratorio — Phureja
 
+**Versión: [0.1.0-beta](https://github.com/oquinterol/BIOMOLC-PhurejaMutante/tree/0.1.0-beta)** ·
+[Manual en Read the Docs](https://biomolc-phurejamutante.readthedocs.io/es/latest/)
+
 [![Pipeline tests](https://github.com/oquinterol/BIOMOLC-PhurejaMutante/actions/workflows/tests.yml/badge.svg)](https://github.com/oquinterol/BIOMOLC-PhurejaMutante/actions/workflows/tests.yml)
 [![DOI](https://zenodo.org/badge/525475132.svg)](https://zenodo.org/badge/latestdoi/525475132)
 [![License](https://img.shields.io/github/license/oquinterol/BIOMOLC-PhurejaMutante)](LICENSE)
@@ -33,7 +36,7 @@ sesgo respecto a Colombia y los mutantes.
 ## Empezar
 
 1. Clona el repositorio e instala los entornos según la
-   [guía de instalación](docs/snakemake-workflow.md#instalación-aislada-sin-sudo).
+   [guía de instalación](docs/install.rst).
 2. Copia las [plantillas genéricas](config/examples/) a `config/local/` y
    configura rutas, muestras, orientación y recursos.
 3. Ejecuta desde la raíz del repositorio:
@@ -53,6 +56,14 @@ no incluyen FASTQ: debes aportar tus propios archivos y confirmar metadatos.
 prueba pequeña, ejecución completa, salidas, reanudación y diagnóstico.
 
 ## Documentación
+
+El [manual completo](https://biomolc-phurejamutante.readthedocs.io/es/latest/)
+conserva el sitio Read the Docs existente: instalación, uso, configuración,
+métodos, resultados, Slurm y diagnóstico. Las fuentes están en
+[`docs/index.rst`](docs/index.rst); la versión se lee desde [`VERSION`](VERSION).
+Consulta [`docs/development.rst`](docs/development.rst) para compilarlo localmente.
+La disponibilidad de cada etiqueta en el sitio depende de las versiones activadas
+y sus builds en Read the Docs.
 
 | Documento | Contenido |
 | --- | --- |

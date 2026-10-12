@@ -1,22 +1,51 @@
-..
-   Copyright (C) 2022-2022 Alexis Quintero. Todos los derechos reservados.
-   .
+BIOMOLC-PhurejaMutante
+==============================
 
-¡Bienvenidos!
-=============
- 
-Pipeline RNA-seq exploratorio para variedades mutantes de
-Solanum tuberosum grupo Phureja.
+Documentación de la versión |release|, un pipeline reproducible de RNA-seq
+exploratorio para *Solanum tuberosum* grupo Phureja.
 
-El flujo actual usa Snakemake; el código Make histórico no es el punto de
-entrada recomendado. No se distribuyen lecturas ni resultados del análisis.
+El workflow actual usa **Snakemake, HISAT2 y featureCounts** para generar
+control de calidad, conteos exónicos por gen y tablas descriptivas. El código
+puede reutilizarse con FASTQ propios y una referencia FASTA/GFF3 compatible.
 
-* `Inicio y organización <https://github.com/oquinterol/BIOMOLC-PhurejaMutante#readme>`_
-* `Uso con datos propios <https://github.com/oquinterol/BIOMOLC-PhurejaMutante/blob/main/docs/reuse.md>`_
-* `Instalación y workflow <https://github.com/oquinterol/BIOMOLC-PhurejaMutante/blob/main/docs/snakemake-workflow.md>`_
+.. important::
+
+   Se distribuye el **pipeline**, no lecturas, genomas descargados ni archivos
+   de resultados. Las configuraciones ProjectCreole contienen metadatos del
+   proyecto original. No hay expresión diferencial inferencial, p-valores ni
+   FDR en esta versión.
+
+Empieza por :doc:`install`, prepara las entradas con :doc:`configuration`
+y sigue :doc:`usage`. Para entender qué mide cada salida, consulta
+:doc:`methods` y :doc:`outputs`.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Manual de usuario
+
+   overview
+   install
+   usage
+   configuration
+   methods
+   outputs
+   cluster
+   troubleshooting
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Proyecto y versiones
+
+   development
+   release-notes
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contents:
+   :caption: Guías complementarias y evidencia histórica
 
-   install
+   reuse
+   snakemake-workflow
+   projectcreole-smoke-tests
+
+* `Código y etiquetas en GitHub <https://github.com/oquinterol/BIOMOLC-PhurejaMutante>`_
+* `Reportar problemas <https://github.com/oquinterol/BIOMOLC-PhurejaMutante/issues>`_
