@@ -1,126 +1,109 @@
-# RNA-seq exploratorio de mutantes de *Solanum tuberosum* grupo Phureja
-___
+# Pipeline RNA-seq exploratorio — Phureja
 
+[![Pipeline tests](https://github.com/oquinterol/BIOMOLC-PhurejaMutante/actions/workflows/tests.yml/badge.svg)](https://github.com/oquinterol/BIOMOLC-PhurejaMutante/actions/workflows/tests.yml)
 [![DOI](https://zenodo.org/badge/525475132.svg)](https://zenodo.org/badge/latestdoi/525475132)
-[![opensource](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](#)
-[![GitHub issues](https://img.shields.io/github/issues/oquinterol/BIOMOLC-PhurejaMutante)](https://github.com/oquinterol/BIOMOLC-PhurejaMutante/issues)
-![Contributions welcome](https://img.shields.io/badge/contributions-welcome-blue.svg)
-[![GitHub license](https://img.shields.io/github/license/oquinterol/BIOMOLC-PhurejaMutante)](https://github.com/oquinterol/BIOMOLC-PhurejaMutante/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/oquinterol/BIOMOLC-PhurejaMutante)](LICENSE)
 
-<h1 align="center">
-  <a href="https://github.com/oquinterol/BIOMOLC-PhurejaMutante">
-    <img alt="BIOMOLC logo" src="./docs/biomolc.png" width="300">
-  </a>
-  <br>Grupo de Investigación BIOMOLC
-  <br>Semillero de Agrigenómica
-</h1>
-<h3 align="center">Universidad Distrital Francisco José de Caldas</h3>
+Pipeline de BIOMOLC / Semillero de Agrigenómica, Universidad Distrital
+Francisco José de Caldas, para explorar RNA-seq de *Solanum tuberosum* grupo
+Phureja. Reutilizable con tus propios FASTQ y una referencia anotada compatible.
 
-## Pipeline actual: Snakemake, RNA-seq exploratorio
+**Este repositorio publica el pipeline, no los datos ni resultados del análisis.**
+Incluye configuraciones de ejemplo y metadatos del proyecto original.
+Las pruebas usan entradas sintéticas temporales; no requieren ProjectCreole.
 
-El nuevo flujo usa **SpudDB DM v6.1 + HISAT2 + featureCounts**, con FastQC,
-MultiQC y matrices de conteos/CPM. La referencia se configura en YAML para
-sustituirla después por un ensamblaje anotado de Colombia.
-
-**Sin réplicas biológicas: no se ejecuta DESeq2 ni se reportan p-valores/FDR.**
-Las razones de abundancia son descriptivas y se comparan muestras del mismo
-estadio. Los estadios no se convierten en réplicas.
+## Qué hace
 
 ```text
-validación → referencia y exones por gen → HISAT2 → BAM → featureCounts
-           └── FastQC / MultiQC           └── conteos / CPM / razones descriptivas
+FASTQ + muestras TSV + referencia FASTA/GFF3
+  → validación y procedencia
+  → FastQC → HISAT2 → BAM ordenado/indexado → featureCounts
+  → conteos por gen / CPM / razones descriptivas
+  → MultiQC
 ```
 
-Instalación aislada, configuración, resultados y perfiles local/Slurm:
-[guía del workflow](docs/snakemake-workflow.md).
+Referencia predeterminada: **SpudDB DM v6.1** con hashes fijados.
+El workflow usa Snakemake y entornos versionados.
 
-Los datos de ProjectCreole no se distribuyen en este repositorio. Antes de la
-prueba, ajustar `data_root` en `config/smoke.yaml` o pasarlo con
-`--config data_root=/ruta/ProjectCreole`.
+**Alcance exploratorio:** sin réplicas biológicas no se ejecuta DESeq2 ni se
+reportan p-valores/FDR. Los estadios no son réplicas. No incluye trimming,
+procesamiento SRA ni llamado de variantes. La referencia DM puede introducir
+sesgo respecto a Colombia y los mutantes.
+
+## Empezar
+
+1. Clona el repositorio e instala los entornos según la
+   [guía de instalación](docs/snakemake-workflow.md#instalación-aislada-sin-sudo).
+2. Copia las [plantillas genéricas](config/examples/) a `config/local/` y
+   configura rutas, muestras, orientación y recursos.
+3. Ejecuta desde la raíz del repositorio:
 
 ```bash
-# Desde la raíz del repositorio, después de instalar los entornos de la guía:
-bin/run-workflow --profile profiles/local --dry-run
-bin/run-workflow --profile profiles/local
-.venv/bin/python tests/check_smoke_outputs.py
-bin/run-workflow --profile profiles/local --lint
-.venv/bin/python -m unittest discover -s tests -v
+bin/run-workflow --profile profiles/local \
+  --configfile config/local/run.yaml --dry-run
+bin/run-workflow --profile profiles/local \
+  --configfile config/local/run.yaml --cores 4 --resources mem_mb=24000
 ```
 
-La prueba predeterminada usa dos prefijos de 10000 lecturas de ProjectCreole
-y 2 Mb de chr01. **Solo valida funcionamiento técnico**, no resultados
-biológicos. Para ejecutar datos completos primero se deben confirmar layout y
-strandedness. El perfil Slurm está preparado, pero aún no se ha probado en un
-clúster. No se modifican los FASTQ originales.
+El segundo comando es un ejemplo para el genoma completo: ajusta la memoria a
+la máquina y al YAML. El índice solicita inicialmente 16 GB. Las plantillas
+no incluyen FASTQ: debes aportar tus propios archivos y confirmar metadatos.
 
-**Validado localmente:** 35 pruebas unitarias, lint de Snakemake y dos ejecuciones
-de extremo a extremo con salidas independientes. La reejecución reutiliza los
-resultados actualizados. No se han procesado las 15 bibliotecas completas.
+**[Guía de reutilización paso a paso](docs/reuse.md)**: entradas, single/paired-end,
+prueba pequeña, ejecución completa, salidas, reanudación y diagnóstico.
 
-| Archivo | Función |
-|---|---|
-| `workflow/Snakefile` | Etapas del análisis exploratorio |
-| `config/reference-spuddb.yaml` | FASTA, GFF3 y SHA-256 de DM v6.1 |
-| `config/smoke.yaml` | Prueba técnica pequeña |
-| `config/projectcreole.yaml` | Configuración para las bibliotecas completas |
-| `config/samples-projectcreole.tsv` | Muestras y metadatos pendientes de confirmar |
-| `profiles/local/` y `profiles/slurm/` | Entornos de ejecución |
+## Documentación
 
-Resultados de la prueba en `result/snakemake-smoke/`: matrices en `tables/`
-y reporte integrado en `qc/multiqc_report.html`. Datos, referencias descargadas,
-resultados y entornos instalados están excluidos de Git.
+| Documento | Contenido |
+| --- | --- |
+| [Reutilización](docs/reuse.md) | Cómo usar el pipeline en otro proyecto |
+| [Workflow detallado](docs/snakemake-workflow.md) | Instalación, métodos, referencia, resultados y Slurm |
+| [Validación histórica ProjectCreole](docs/projectcreole-smoke-tests.md) | Evidencia y límites de las pruebas originales |
 
-## Instalación histórica con Make (no recomendada para el nuevo flujo)
+## Organización
 
-Los scripts siguientes se conservan como antecedente de la tesis. Contienen
-problemas conocidos y no están validados para el análisis actual. El nuevo
-workflow no los invoca ni requiere `make install`.
+```text
+workflow/Snakefile          reglas del pipeline actual
+workflow/scripts/          validación, referencia y tablas
+workflow/envs/             herramientas y lock Linux x86_64
+config/examples/           plantillas genéricas sin archivos de datos
+config/local/              configuración privada (ignorada, creada por el usuario)
+config/*projectcreole*      configuraciones/metadatos del proyecto original
+profiles/local/            ejecución local
+profiles/slurm/            perfil de clúster, pendiente de validación real
+bin/run-workflow            punto de entrada recomendado
+tests/                     regresiones con entradas sintéticas temporales
+docs/                      documentación
+```
 
-- Para las principales distribuciones basadas en Debian y en Arch Linux.
+`data/`, `references/`, `result/`, `results/`, `.venv/` y `.tools/` están excluidos
+para nuevas incorporaciones a Git (salvo la lista histórica de URLs
+`data/referencefiles.txt`). Mantén datos privados fuera del repositorio o en
+`data/`, salidas en `result/` y rutas personales en `config/local/`.
 
-    - Distribución basada en Debian (Ubuntu, Linux Mint, Pop OS!, etc)
-        
-        ```sh
-        sudo apt install make git curl
-        ```
+## Validación y limitaciones
 
-    - Distribución basada en Arch (Manjaro, Crystal, etc)
-        
-        ```sh
-        sudo pacman -Syyu make git curl
-        ```
-    
-    Esas son las dependencias básicas que permitirán automatizar la instalación de las otras dependencias y programas necesarios.
+```bash
+.venv/bin/python -m unittest discover -s tests -v
+bash -n bin/run-workflow
+```
 
-    ```sh
-    git clone https://github.com/oquinterol/BIOMOLC-PhurejaMutante.git Pipeline_Phureja
-    cd Pipeline_Phureja
-    make install
-    ```
-    
-## Uso histórico con Make
-Agregar los archivos SRA dentro de `./data/sra` para hacer uso de la herramienta, para ello con **make** se puede acceder a todas las opciones.
+GitHub Actions ejecuta pruebas unitarias sin datos reales. La guía detallada
+registra pruebas end-to-end históricas con subconjuntos single-end de
+ProjectCreole; no equivalen a validar bibliotecas completas, otros proyectos,
+paired-end real ni Slurm. El comando sin `--configfile` mantiene el smoke
+ProjectCreole original y requiere esos datos externos.
 
-- Limpieza y Filtrado
+## Código histórico
 
-    ```sh
-    make trim
-    ```
+El Makefile y los demás scripts `bin/*.sh`/R se conservan como antecedente de
+la tesis. Tienen problemas conocidos, no están validados para el flujo actual
+y **no los invoca Snakemake**. No uses `make install` ni `make dea` para ejecutar
+este pipeline.
 
-- Alineamiento
-    
-    ```sh
-    make align
-    ```
+## Contribuir y licencia
 
-- DEA: Análisis de Expresión Diferencial
-
-    ```sh
-    make dea
-    ```
-
-- SNPs: Llamado de variantes
-
-    ```sh
-    make snp
-    ```
+Reporta problemas en [GitHub Issues](https://github.com/oquinterol/BIOMOLC-PhurejaMutante/issues)
+con comando, versiones y log mínimo, sin datos privados ni credenciales.
+Antes de enviar cambios ejecuta las pruebas. Consulta [LICENSE](LICENSE)
+para los términos del código; las referencias externas conservan sus propios términos.

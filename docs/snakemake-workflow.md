@@ -1,5 +1,10 @@
 # Pipeline RNA-seq exploratorio con Snakemake
 
+Para datos de otro proyecto, empieza por la [guía de reutilización](reuse.md)
+y las plantillas `config/examples/`. Esta guía conserva también la configuración
+y evidencia histórica de ProjectCreole; los comandos smoke requieren esos
+FASTQ externos, que no se distribuyen con el código.
+
 ## Estado y alcance
 
 Primera versión ejecutable, probada localmente sobre subconjuntos reales de
@@ -89,7 +94,10 @@ completos dentro de esa región, sin cambiar las coordenadas.
 La biblioteca single-end/no orientada es una **suposición técnica de smoke**,
 no una confirmación del protocolo experimental.
 
-### Evidencia de la ejecución local
+### Evidencia histórica de la ejecución local
+
+Los números siguientes corresponden a la validación original; las pruebas
+unitarias actuales incluyen regresiones adicionales y se ejecutan en CI.
 
 - Snakemake 9.27.0; 35 pruebas unitarias satisfactorias y lint limpio.
 - Referencia smoke: 178 genes y 899 sitios de splicing.
