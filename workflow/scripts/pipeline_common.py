@@ -16,6 +16,11 @@ def load_samples(config):
         raise ValueError("allow_unconfirmed_library must be boolean")
     if allow_unknown and not smoke:
         raise ValueError("Unconfirmed libraries are allowed only for technical smoke tests")
+    alignment = config.get("alignment", {})
+    if not isinstance(alignment, dict):
+        raise ValueError("alignment must be a mapping")
+    if not isinstance(alignment.get("use_strandedness", True), bool):
+        raise ValueError("alignment.use_strandedness must be boolean")
     pseudo = float(config.get("analysis", {}).get("pseudocount_cpm", 1))
     if not math.isfinite(pseudo) or pseudo <= 0:
         raise ValueError("pseudocount_cpm must be finite and positive")
@@ -67,3 +72,15 @@ def load_samples(config):
         if samples[c["numerator"]]["stage"] != samples[c["denominator"]]["stage"]:
             raise ValueError("Descriptive mutant/control ratios must use the same stage")
     return samples
+
+
+def alignment_strandness(sample, config):
+    """HISAT2 strand option, independent of the library-specific counting mode."""
+    if not config.get("alignment", {}).get("use_strandedness", True):
+        return None
+    if sample["strandedness"] not in {"forward", "reverse"}:
+        return None
+    strand = "F" if sample["strandedness"] == "forward" else "R"
+    if sample["layout"] == "paired":
+        return f"{strand}{'R' if strand == 'F' else 'F'}"
+    return strand

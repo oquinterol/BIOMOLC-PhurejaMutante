@@ -9,7 +9,7 @@ configfile: "config/smoke.yaml"
 
 SCRIPTS = str(Path(workflow.basedir) / "scripts")
 sys.path.insert(0, SCRIPTS)
-from pipeline_common import load_samples
+from pipeline_common import alignment_strandness, load_samples
 
 SAMPLES = load_samples(config)
 IDS = list(SAMPLES)
@@ -54,10 +54,9 @@ def read_path(sid, mate):
 def align_options(wc):
     row = SAMPLES[wc.sample]
     options = ["-1", read_path(wc.sample, "R1"), "-2", read_path(wc.sample, "R2")] if row["layout"] == "paired" else ["-U", read_path(wc.sample, "R1")]
-    if row["strandedness"] in {"forward", "reverse"}:
-        strand = "F" if row["strandedness"] == "forward" else "R"
-        paired_strand = f"{strand}{'R' if strand == 'F' else 'F'}"
-        options.extend(["--rna-strandness", paired_strand if row["layout"] == "paired" else strand])
+    strand = alignment_strandness(row, config)
+    if strand is not None:
+        options.extend(["--rna-strandness", strand])
     return shlex.join(options)
 
 
