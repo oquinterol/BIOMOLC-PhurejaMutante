@@ -1,0 +1,24 @@
+# Copy to config/local/run.yaml and adapt to your own confirmed metadata.
+samples: config/local/samples.tsv
+data_root: /absolute/path/to/your/fastq
+output_dir: result/my-project
+allow_unconfirmed_library: false
+smoke:
+  enabled: false
+alignment:
+  use_strandedness: true
+analysis:
+  mode: exploratory
+  pseudocount_cpm: 1.0
+  low_count_threshold: 10
+  # Optional same-stage descriptive comparisons; these are not DE tests.
+  contrasts: []
+threads:
+  index: 4
+  align: 4
+  count: 4
+memory_mb:
+  reference: 2048
+  index: 16000
+  align: 4096
+  count: 2048
