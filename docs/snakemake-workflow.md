@@ -139,6 +139,12 @@ no tiene filas `gene`; el workflow admite esos identificadores Parent de gen.
 No se cuentan CDS como sustituto silencioso de exones. Se validan contigs,
 coordenadas, Parent, orientación y límites de la referencia.
 
+Por defecto, HISAT2 usa la orientación declarada de las bibliotecas. Para un
+alineamiento neutral (por ejemplo, comparar posteriormente modos de conteo),
+configurar `alignment: {use_strandedness: false}`. Esto omite
+`--rna-strandness` de HISAT2 **sin cambiar** el modo de featureCounts de cada
+biblioteca. La opción debe ser booleana; su valor predeterminado es `true`.
+
 featureCounts usa SAF, MAPQ mínimo 10 y alineamientos primarios. Por defecto no
 cuenta multimapeos ni asignaciones ambiguas entre genes. En single-end cuenta
 lecturas; la rama paired-end cuenta fragmentos con ambos mates alineados y
